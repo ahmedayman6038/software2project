@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet" th:href="@{/css/main.css}"
+	href="../css/main.css" />
+    <title>Online Market</title>
+</head>
+<body>
+    <div class="header">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                   
+                    <a href="/" class="navbar-brand">Online Market</a>
+            </div>
+            <div class="navbar-collapse collapse">
+ 				<ul class="nav navbar-nav">
+                    <li><a href="/addProduct"  th:if="${type == 'admin'}">Add Product</a></li>
+               	</ul>
+               	 <ul class="nav navbar-nav" style="float:right;"  th:if="${email == null}">
+               	 	<li><a href="/login">Login <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a></li>
+                 	<li><a href="/register">Registration <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span></a></li>
+            	</ul>
+            	<ul class="nav navbar-nav" style="float:right;"  th:if="${email != null}">
+               	 	<li><a href="/" th:text="'Welcome ' + ${name}"></a></li>
+               	 	<li><a href="/logout">Logout <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
+            	</ul>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="container body-content">
+                 
+               
+<form class="form-horizontal" method="post" th:object="${user}" action="/register">
+<fieldset>
+
+<h2>Registration</h2>
+<hr />
+<div class="form-group">
+<label class="control-label col-md-4">User Name</label>
+<div class="col-md-4">
+    <input type="text" class="form-control input-md"  th:field="*{name}" required="required" />
+    <span class="text-danger"></span>
+</div>
+</div>
+
+<div class="form-group">
+<label class="control-label col-md-4">User Email</label>
+<div class="col-md-4">
+    <input type="text" class="form-control input-md"  th:field="*{email}" required="required" />
+    <span class="text-danger" th:text="${error}"></span>
+</div>
+</div>
+
+<div class="form-group">
+<label class="control-label col-md-4">User Password</label>
+<div class="col-md-4">
+    <input type="password" class="form-control input-md"  th:field="*{password}" required="required" />
+    <span class="text-danger"></span>
+</div>
+</div>
+
+  <div class="form-group">
+            <label class="control-label col-md-4">Select A Type</label>
+            <div class="col-md-4">
+            <select class="form-control text-box single-line" th:field="*{type}">
+            	<option value="buyer">Buyer</option>
+            	<option value='storeOwner'>Store Owner</option>
+            </select>
+            </div>
+        </div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton"></label>
+  <div class="col-md-4 center-block">
+    <input  type="submit" value="Registration" name="submit" class="btn btn-primary" />
+  </div>
+</div>
+
+</fieldset>
+</form>  
+                 
+                 
+   <hr />
+        <footer>
+        <p>2018 - Online Market</p>
+        </footer>
+    </div>
+
+
+	
+	<script type="text/javascript"
+		src="webjars/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
