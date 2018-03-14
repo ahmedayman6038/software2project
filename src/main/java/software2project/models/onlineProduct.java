@@ -17,8 +17,8 @@ public class onlineProduct extends product{
 		// TODO Auto-generated constructor stub
 	}
 
-	public onlineProduct(String name, float startPrice, float endPrice, String category,brand brand, Set<storeProducts> stores) {
-		super(name, startPrice, endPrice, category, brand, stores);
+	public onlineProduct(String name, float startPrice, float endPrice, String category, Set<storeProducts> stores) {
+		super(name, startPrice, endPrice, category, stores);
 		// TODO Auto-generated constructor stub
 	}
 

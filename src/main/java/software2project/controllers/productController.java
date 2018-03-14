@@ -12,7 +12,6 @@ import software2project.Main;
 import software2project.models.normalProduct;
 import software2project.models.onlineProduct;
 import software2project.models.user;
-import software2project.repository.brandRepository;
 import software2project.repository.productRepository;
 import software2project.repository.userRepository;
 
@@ -24,8 +23,6 @@ import software2project.repository.userRepository;
 @Controller
 public class productController {
 	
-	@Autowired
-	private brandRepository brandRepo;
 	@Autowired
 	private productRepository productRepo;
 	@Autowired
@@ -46,7 +43,6 @@ public class productController {
 			Main.getSessionAttribute(model, request);
 			model.addAttribute("normalProduct", new normalProduct());
 			model.addAttribute("onlineProduct", new onlineProduct());
-			model.addAttribute("brands", brandRepo.findAll());
 			return "addProduct";
 		}
 		return "redirect:/login";

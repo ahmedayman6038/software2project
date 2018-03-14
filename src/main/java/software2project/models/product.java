@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -24,22 +22,21 @@ public class product {
 	private float startPrice;
 	private float endPrice;
 	private String category;
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="brand_id", nullable=false)
-	private brand brand;
+	private brand brand;*/
 	@OneToMany(mappedBy = "product")
 	private Set<storeProducts> stores;
     
 	public product() {
 		
 	}
-	public product(String name, float startPrice, float endPrice, String category, brand brand, Set<storeProducts> stores ) {
+	public product(String name, float startPrice, float endPrice, String category, Set<storeProducts> stores ) {
 		super();
 		this.name = name;
 		this.startPrice = startPrice;
 		this.endPrice = endPrice;
 		this.category = category;
-		this.brand = brand;
 		this.stores = stores;
 	}
 	public Integer getId() {
@@ -68,12 +65,6 @@ public class product {
 	}
 	public void setCategory(String category) {
 		this.category = category;
-	}
-	public brand getBrand() {
-		return brand;
-	}
-	public void setBrand(brand brand) {
-		this.brand = brand;
 	}
 	public Set<storeProducts> getStores() {
 		return stores;

@@ -71,7 +71,7 @@
   <div class="panel-heading" th:text="${store2.name}"></div>
   <div class="panel-body">
   <p th:text="@{'Type: '+${store2.type}+' / WebSite: '+${store2.webSite}}"></p>
-  <!-- <button class="btn btn-default" th:if="${store2.accepted != true}" th:attr="ng-click='accept('+${store2.id}+');showButton'+${store2.id}+'=true',ng-show='!showButton'+${store2.id}+'">Accept</button> -->
+  <button class="btn btn-default" th:if="${store2.accepted != true}"  th:attr="ng-click='accept('+${store2.id}+');showButton'+${store2.id}+'=true',ng-show='!showButton'+${store2.id}+''" >Accept</button>  
   </div>
 </div>
 

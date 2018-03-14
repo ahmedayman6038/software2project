@@ -23,7 +23,7 @@ public class brand {
 	private String company;
 	
 	@OneToMany(mappedBy="brand")
-    private Set<product> products;
+    private Set<storeProducts> products;
 	
 	public brand() {
 		

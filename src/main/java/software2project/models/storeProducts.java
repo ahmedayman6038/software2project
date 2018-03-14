@@ -24,6 +24,9 @@ public class storeProducts implements Serializable {
     @ManyToOne
     @JoinColumn(name = "product_id")
 	private product product;
+	@ManyToOne
+	@JoinColumn(name="brand_id", nullable=false)
+	private brand brand;
 	private Float price;
 	private Integer userBuyed;
 	private Integer userViewed;
@@ -33,10 +36,11 @@ public class storeProducts implements Serializable {
 	public storeProducts() {
 		
 	}
-	public storeProducts(store store, product product, Float price,	Integer userBuyed, Integer userViewed,Integer quantity, Date lastBuyedDate) {
+	public storeProducts(store store, product product,brand brand,Float price,	Integer userBuyed, Integer userViewed,Integer quantity, Date lastBuyedDate) {
 		super();
 		this.store = store;
 		this.product = product;
+		this.brand = brand;
 		this.price = price;
 		this.userBuyed = userBuyed;
 		this.userViewed = userViewed;
@@ -54,6 +58,12 @@ public class storeProducts implements Serializable {
 	}
 	public void setProduct(product product) {
 		this.product = product;
+	}
+	public brand getBrand() {
+		return brand;
+	}
+	public void setBrand(brand brand) {
+		this.brand = brand;
 	}
 	public Float getPrice() {
 		return price;

@@ -56,6 +56,14 @@
             </div>
         </div>
         
+         <div class="form-group">
+            <label class="control-label col-md-2">Product Brand</label>
+            <div class="col-md-10">
+            <select class="form-control text-box single-line" name="brand" id="brand">
+           		<option th:each = "brand: ${brands}" th:value="${brand.id}" th:text="${brand.name}" ></option>
+            </select>
+            </div>
+        </div>
         
          <div class="form-group">
             <label class="control-label col-md-2">Price</label>

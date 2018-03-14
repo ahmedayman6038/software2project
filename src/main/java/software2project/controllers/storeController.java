@@ -32,6 +32,8 @@ public class storeController {
 	private productRepository productRepo;
 	@Autowired
 	private statisticRepository statisticRepo;
+	@Autowired
+	private brandRepository brandRepo;
 	
 	@GetMapping("/dashboard")
 	public String dashboard(Model model,HttpServletRequest request) {
@@ -122,6 +124,7 @@ public class storeController {
 			}else {
 				model.addAttribute("products", productRepo.getOnlineProducts());
 			}
+			model.addAttribute("brands", brandRepo.findAll());
 			model.addAttribute("storeId", id);
 			model.addAttribute("type", type);
 			return "addProductToStore";
@@ -130,7 +133,7 @@ public class storeController {
 	}
 	
 	@PostMapping("/addProductToStore/{type}")
-	public String addProductToStore(@PathVariable String type,@RequestParam("storeId") Integer storeId,@RequestParam("productId") Integer productId,@RequestParam("quantity") Integer quantity,@RequestParam("price") Float price,Model model) {
+	public String addProductToStore(@PathVariable String type,@RequestParam("storeId") Integer storeId,@RequestParam("productId") Integer productId,@RequestParam("brand") brand brand,@RequestParam("quantity") Integer quantity,@RequestParam("price") Float price,Model model) {
 		if(type.equals("normal")) {
 			normalStore nstore = storeRepo.getNormalStore(storeId);
 			normalProduct nproduct = productRepo.getNormalProduct(productId);
@@ -144,6 +147,7 @@ public class storeController {
 			storeProducts storeProduct = new storeProducts();
 			storeProduct.setStore(nstore);
 			storeProduct.setProduct(nproduct);
+			storeProduct.setBrand(brand);
 			storeProduct.setPrice(price);
 			storeProduct.setQuantity(quantity);
 			storeProduct.setUserBuyed(0);
@@ -165,6 +169,7 @@ public class storeController {
 			storeProducts storeProduct = new storeProducts();
 			storeProduct.setStore(ostore);
 			storeProduct.setProduct(oproduct);
+			storeProduct.setBrand(brand);
 			storeProduct.setPrice(price);
 			storeProduct.setQuantity(quantity);
 			storeProduct.setUserBuyed(0);
