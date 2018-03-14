@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" ng-app="myApp">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet" th:href="@{/css/main.css}"
+	href="../css/main.css" />
+    <title>Online Market</title>
+</head>
+<body>
+     <div class="header">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                   
+                    <a href="/" class="navbar-brand">Online Market</a>
+            </div>
+            <div class="navbar-collapse collapse">
+               	<ul class="nav navbar-nav">
+                    <li><a href="/addStore"  th:if="${type == 'storeOwner'}">Add Store</a></li>
+               	</ul>
+            	<ul class="nav navbar-nav" style="float:right;"  th:if="${email != null}">
+               	 	<li><a href="/" th:text="'Welcome ' + ${name}"></a></li>
+               	 	<li><a href="/logout">Logout <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>               	 	
+            	</ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container body-content">
+         
+         
+<h2>Add Product To Store</h2>
+         
+    <form  th:action="@{'/addProductToStore/' + ${type}}"  action="/addProductToStore" method="post">
+   <div class="form-horizontal">
+        <h4>Products</h4>
+        <hr/>
+       <input type="hidden" th:value="${storeId}" name="storeId" id="storeId"/> 
+       
+         <div class="form-group">
+            <label class="control-label col-md-2">Product Name</label>
+            <div class="col-md-10">
+            <select class="form-control text-box single-line" name="productId" id="productId">
+           		<option th:each = "product: ${products}" th:value="${product.id}" th:text="${product.name}" ></option>
+            </select>
+            </div>
+        </div>
+        
+        
+         <div class="form-group">
+            <label class="control-label col-md-2">Price</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control text-box single-line" name="price" id="price"  required="required" />
+                <span class="text-danger" th:text="${error}"></span>
+            </div>
+        </div>
+        
+         <div class="form-group">
+            <label class="control-label col-md-2">Quantity</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control text-box single-line" name="quantity" id="quantity"  required="required" />
+                <span class="text-danger"></span>
+            </div>
+        </div>
+
+       
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" name="submit" />
+            </div>
+        </div>
+    </div>
+</form>           
+   
+                 
+                 
+                 
+                 
+   <hr />
+        <footer>
+        <p>2018 - Online Market</p>
+        </footer>
+    </div>
+
+
+	
+	<script type="text/javascript"
+		src="/webjars/jquery/1.11.1/jquery.min.js"></script>	
+	<script type="text/javascript"
+		src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="/webjars/angularjs/1.6.9/angular.min.js"></script>
+	<script type="text/javascript"
+		src="/../js/main.js"></script>
+</body>
+</html>

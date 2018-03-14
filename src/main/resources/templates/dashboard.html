@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" ng-app="myApp">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet" th:href="@{/css/main.css}"
+	href="../css/main.css" />
+    <title>Online Market</title>
+</head>
+<body>
+    <div class="header">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                   
+                    <a href="/dashboard" class="navbar-brand">Online Market</a>
+            </div>
+            <div class="navbar-collapse collapse">
+               	<ul class="nav navbar-nav">
+                    <li><a href="/dashboard/addStore"  th:if="${type == 'storeOwner'}">Add Store</a></li>
+               	</ul>
+            	<ul class="nav navbar-nav" style="float:right;"  th:if="${email != null}">
+               	 	<li><a href="/" th:text="'Welcome ' + ${name}"></a></li>
+               	 	<li><a href="/logout">Logout <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
+            	</ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container body-content">
+     <h3>Your Stores</h3>
+     
+     <ul class="nav nav-tabs" ng-init="tab = 1">
+  <li role="presentation" ng-class="{active:tab===1}"><a href="#" ng-click="tab = 1">Normal Store</a></li>
+  <li role="presentation" ng-class="{active:tab===2}"><a href="#" ng-click="tab = 2">Online Store</a></li>
+</ul>
+<br/>
+     <div ng-show="tab === 1">
+     
+     <div class="panel panel-default" th:each = "store1: ${stores1}">
+  <div class="panel-heading" th:text="${store1.name}"></div>
+  <div class="panel-body">
+  <p th:text="@{'Type: '+${store1.type}+' / Addreess: '+ ${store1.address}}"></p>	
+  <a class="btn btn-default" th:href="@{'/dashboard/' + ${store1.name} + '/' + ${store1.id}}" role="button">View</a>
+  <a class="btn btn-default" th:href="@{'/dashboard/add/normal/' + ${store1.id}}" role="button">Add Product</a>
+  </div>
+</div>
+
+ </div> 
+ 
+ <div ng-show="tab === 2">
+     
+     <div class="panel panel-default" th:each = "store2: ${stores2}">
+  <div class="panel-heading" th:text="${store2.name}"></div>
+  <div class="panel-body">
+  <p th:text="@{'Type: '+${store2.type}+' / WebSite: '+${store2.webSite}}"></p>
+  <a class="btn btn-default" th:href="@{'/dashboard/' + ${store2.name} + '/' + ${store2.id}}" role="button">View</a>
+  <a class="btn btn-default" th:href="@{'/dashboard/add/online/' + ${store2.id}}" role="button">Add Product</a>
+  </div>
+</div>
+
+ </div>         
+   <hr />
+        <footer>
+        <p>2018 - Online Market</p>
+        </footer>
+    </div>
+
+
+	
+	<script type="text/javascript"
+		src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="/webjars/angularjs/1.6.9/angular.min.js"></script>
+	<script type="text/javascript"
+		src="/../js/main.js"></script>
+	
+</body>
+</html>

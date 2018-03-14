@@ -15,9 +15,5 @@ import software2project.Main;
 @Controller
 public class homeController {
 	
-	@GetMapping("/")
-	public String home(Model model,HttpServletRequest request) {
-		Main.getSessionAttribute(model, request);
-		return "home";
-	}
+	
 }

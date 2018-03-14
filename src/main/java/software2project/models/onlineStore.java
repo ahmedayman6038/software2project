@@ -11,22 +11,23 @@ import javax.persistence.Entity;
  */
 @Entity
 public class onlineStore extends store{
-	private String webSiteName;
+	private String webSite;
 
 	public onlineStore() {
-		
+		super();
 	}
-	public onlineStore(String name, Set<product> products,String webSiteName) {
-		super(name, products);
-		this.webSiteName = webSiteName;
-	}
-
-	public String getWebSiteName() {
-		return webSiteName;
+	
+	public onlineStore(String name,String type ,user user,Set<storeProducts> products,String webSite, boolean accepted) {
+		super(name, type,user,products, accepted);
+		this.webSite = webSite;
 	}
 
-	public void setWebSiteName(String webSiteName) {
-		this.webSiteName = webSiteName;
+	public String getWebSite() {
+		return webSite;
+	}
+
+	public void setWebSite(String webSite) {
+		this.webSite = webSite;
 	}
 
 

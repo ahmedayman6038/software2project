@@ -27,21 +27,35 @@ public class productController {
 	@Autowired
 	private userRepository userRepo;
 	
+	@GetMapping("/")
+	public String products(Model model,HttpServletRequest request) {
+		Main.getSessionAttribute(model, request);
+		model.addAttribute("products", productRepo.findAll());
+		return "home";
+	}
+	
 	@GetMapping("/addProduct")
 	public String addProduct(Model model,HttpServletRequest request) {
 		String email = (String) request.getSession().getAttribute("email");
 		List<user> users = userRepo.checkType(email, "admin");
 		if(users.size() > 0) {
 			Main.getSessionAttribute(model, request);
-			model.addAttribute("product", new product());
+			model.addAttribute("normalProduct", new normalProduct());
+			model.addAttribute("onlineProduct", new onlineProduct());
 			model.addAttribute("brands", brandRepo.findAll());
 			return "addProduct";
 		}
 		return "redirect:/login";
 	}
 	
-	@PostMapping("/addProduct")
-	public String addProduct(@ModelAttribute product product) {
+	@PostMapping("/addNormalProduct")
+	public String addProduct(@ModelAttribute normalProduct product) {
+		productRepo.save(product);
+		return "redirect:/addProduct";
+	}
+	
+	@PostMapping("/addOnlineProduct")
+	public String addProduct(@ModelAttribute onlineProduct product) {
 		productRepo.save(product);
 		return "redirect:/addProduct";
 	}

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" ng-app="myApp">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <link rel="stylesheet" type="text/css"
-	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+	href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
 	<link rel="stylesheet" th:href="@{/css/main.css}"
 	href="../css/main.css" />
     <title>Online Market</title>
@@ -27,6 +27,15 @@
  				<ul class="nav navbar-nav">
                     <li><a href="/addProduct"  th:if="${type == 'admin'}">Add Product</a></li>
                	</ul>
+               	<ul class="nav navbar-nav">
+                    <li><a href="/addBrand"  th:if="${type == 'admin'}">Add Brand</a></li>
+               	</ul>
+               	<ul class="nav navbar-nav">
+                    <li><a href="/addStatistic"  th:if="${type == 'admin'}">Add Statistic</a></li>
+               	</ul>
+               	<ul class="nav navbar-nav">
+                    <li><a href="/showStores"  th:if="${type == 'admin'}">Stores</a></li>
+               	</ul>
                	 <ul class="nav navbar-nav" style="float:right;"  th:if="${email == null}">
                	 	<li><a href="/login">Login <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a></li>
                  	<li><a href="/register">Registration <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span></a></li>
@@ -41,9 +50,44 @@
 </div>
 
     <div class="container body-content">
-                 
-                 
-                 
+     <h2>Products</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Category
+        </th>
+         <th>
+            Brand
+        </th>
+        <th>
+            Store
+        </th>
+        <th>
+            Price
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+	<tr th:each = "product: ${products}">
+		<tr th:each = "stores: ${product.stores}">
+        	<td th:text="${product.name}"></td>
+        	<td th:text="${product.category}"></td>
+        	<td th:text="${product.brand.name}"></td>
+        	<td th:text="${stores.store.name}"></td>
+      		<td th:text="${stores.price}"></td>
+     	   <td>
+        	    <a class="btn btn-default" th:href="@{'/view/' + ${product.id} + '/' + ${stores.store.id}}" role="button">View</a>
+           	 	<a class="btn btn-default" th:href="@{'/buy/' + ${product.id} + '/' + ${stores.store.id}}" role="button">Buy</a>
+        	</td>
+        </tr>
+    </tr>   
+
+</table>
                  
    <hr />
         <footer>
@@ -54,8 +98,13 @@
 
 	
 	<script type="text/javascript"
-		src="webjars/jquery/1.11.1/jquery.min.js"></script>
+		src="/webjars/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript"
-		src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="/webjars/angularjs/1.6.9/angular.min.js"></script>
+	<script type="text/javascript"
+		src="/../js/main.js"></script>
+	
 </body>
 </html>

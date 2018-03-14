@@ -36,10 +36,15 @@ public class userController  {
 	public String login(@ModelAttribute user user,Model model,HttpServletRequest request) {
 		List<user> users = userRepo.findUser(user.getEmail(), user.getPassword());
 		if(users.size() > 0) {
+			request.getSession().setAttribute("id", users.get(0).getId());
 			request.getSession().setAttribute("email", users.get(0).getEmail());
 			request.getSession().setAttribute("type", users.get(0).getType());
 			request.getSession().setAttribute("name", users.get(0).getName());
-			return "redirect:/";
+			if(users.get(0).getType().equals("storeOwner")) {
+				return "redirect:/dashboard";
+			}else {
+				return "redirect:/";
+			}
 		} else {
 			Main.getSessionAttribute(model, request);
 			model.addAttribute("error", "This email or password is incorrect");

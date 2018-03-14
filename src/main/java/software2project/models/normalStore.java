@@ -10,14 +10,14 @@ import javax.persistence.Entity;
  *
  */
 @Entity
-public class offlineStore extends store {
+public class normalStore extends store {
 	private String address;
 
-	public offlineStore() {
-		
+	public normalStore() {
+		super();
 	}
-	public offlineStore(String name, Set<product> products, String address) {
-		super(name,products);
+	public normalStore(String name,String type,user user,Set<storeProducts> products, String address, boolean accepted) {
+		super(name,type ,user,products,accepted);
 		this.address = address;
 	}
 

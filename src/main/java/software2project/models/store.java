@@ -2,14 +2,14 @@ package software2project.models;
 
 import java.util.ArrayList;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * This is a Store Model Class
@@ -22,17 +22,27 @@ public class store {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	private String name;
-	
-	@ManyToMany(cascade = CascadeType.ALL)
+	private String type;
+	private boolean accepted;
+	@ManyToOne
+	@JoinColumn(name="user_id", nullable=false)
+	private user user;
+
+	/*@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable
-	private Set<product> products;
+	private Set<product> products;*/
+	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<storeProducts> products;
 	public store() {
 		
 	}
-	public store(String name, Set<product> products) {
+	public store(String name,String type ,user user,Set<storeProducts> products,boolean accepted) {
 		super();
 		this.name = name;
+		this.user = user;
 		this.products = products;
+		this.accepted = accepted;
+
 	}
 	public Integer getId() {
 		return id;
@@ -46,10 +56,28 @@ public class store {
 	public ArrayList<product> showProduct(){
 		return null;
 	}
-	public Set<product> getProducts() {
+	public Set<storeProducts> getProducts() {
 		return products;
 	}
-	public void setProducts(Set<product> products) {
+	public void setProducts(Set<storeProducts> products) {
 		this.products = products;
+	}
+	public boolean isAccepted() {
+		return accepted;
+	}
+	public void setAccepted(boolean accepted) {
+		this.accepted = accepted;
+	}
+	public user getUser() {
+		return user;
+	}
+	public void setUser(user user) {
+		this.user = user;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

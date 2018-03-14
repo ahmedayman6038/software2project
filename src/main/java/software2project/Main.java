@@ -13,9 +13,11 @@ import org.springframework.ui.Model;
 @SpringBootApplication
 public class Main {
 	public static void getSessionAttribute(Model model,HttpServletRequest request) {
+		Integer id = (Integer) request.getSession().getAttribute("id");
 		String email = (String) request.getSession().getAttribute("email");
 		String type = (String) request.getSession().getAttribute("type");
 		String name = (String) request.getSession().getAttribute("name");
+		model.addAttribute("id",id);
 		model.addAttribute("email",email);
 		model.addAttribute("type",type);
 		model.addAttribute("name",name);

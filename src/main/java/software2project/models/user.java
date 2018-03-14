@@ -1,10 +1,13 @@
 package software2project.models;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * This is a User Model Class
@@ -22,6 +25,9 @@ public class user {
 	private String password;
 	private String type;
 	
+	@OneToMany(mappedBy="user")
+    private Set<store> store;
+	
 	public user() {
 		
 	}
@@ -34,6 +40,9 @@ public class user {
 	}
 	public Integer getId() {
 		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getEmail() {
 		return email;
@@ -58,5 +67,11 @@ public class user {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public Set<store> getStore() {
+		return store;
+	}
+	public void setStore(Set<store> store) {
+		this.store = store;
 	}
 }
