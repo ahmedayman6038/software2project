@@ -5,6 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
+/**
+ * This is a Statistic Model Class
+ * @author Rick & morty
+ *
+ */
 @Entity
 public class statistic {
 	@Id

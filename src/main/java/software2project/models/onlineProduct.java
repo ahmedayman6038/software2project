@@ -4,6 +4,11 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 
+/**
+ * This is a Online Product Model Class Extends From Product Model Class
+ * @author Rick & morty
+ *
+ */
 @Entity
 public class onlineProduct extends product{
 

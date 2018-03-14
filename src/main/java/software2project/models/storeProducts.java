@@ -9,6 +9,11 @@ import javax.persistence.ManyToOne;
 
 
 
+/**
+ * This is a StoreProducts Model Class
+ * @author Rick & morty
+ *
+ */
 @Entity
 public class storeProducts implements Serializable {
 	@Id

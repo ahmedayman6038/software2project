@@ -14,6 +14,11 @@ import software2project.models.user;
 import software2project.repository.statisticRepository;
 import software2project.repository.userRepository;
 
+/**
+ * This is a statistics Controller Responsible for Handling Requests and Operations Related to Statistic Model
+ * @author Rick & morty
+ *
+ */
 @Controller
 public class statisticsController {
 	@Autowired

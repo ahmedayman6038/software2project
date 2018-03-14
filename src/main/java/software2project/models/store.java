@@ -28,9 +28,6 @@ public class store {
 	@JoinColumn(name="user_id", nullable=false)
 	private user user;
 
-	/*@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable
-	private Set<product> products;*/
 	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<storeProducts> products;
 	public store() {

@@ -27,8 +27,6 @@ public class product {
 	@ManyToOne
 	@JoinColumn(name="brand_id", nullable=false)
 	private brand brand;
-	/*@ManyToMany(mappedBy = "products")
-    private Set<store> stores;*/
 	@OneToMany(mappedBy = "product")
 	private Set<storeProducts> stores;
     

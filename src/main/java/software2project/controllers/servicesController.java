@@ -11,6 +11,12 @@ import software2project.models.storeProducts;
 import software2project.models.store;
 import software2project.repository.storeRepository;
 
+/**
+ * This is a Services Controller Responsible for Handling Rest Requests and Operations Related to
+ * Services used in the project   
+ * @author Rick & morty
+ *
+ */
 @RestController
 public class servicesController {
 	@Autowired
