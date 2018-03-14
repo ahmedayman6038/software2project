@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import software2project.Main;
-import software2project.models.*;
-import software2project.repository.*;
+import software2project.models.user;
+import software2project.repository.userRepository;
 
 /**
  * This is a User Controller Responsible for Handling Requests and Operations Related to User Model  

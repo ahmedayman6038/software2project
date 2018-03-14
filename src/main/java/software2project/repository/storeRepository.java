@@ -1,11 +1,13 @@
 package software2project.repository;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import software2project.models.normalStore;
+import software2project.models.onlineStore;
+import software2project.models.store;
+import software2project.models.storeProducts;
 
-import software2project.models.*;
 
 /**
  * This is Store Repository Responsible for Querying the DataBase

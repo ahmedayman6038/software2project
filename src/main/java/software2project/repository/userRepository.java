@@ -1,7 +1,6 @@
 package software2project.repository;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import software2project.models.user;

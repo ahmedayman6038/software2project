@@ -1,21 +1,17 @@
 package software2project.controllers;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import software2project.Main;
 import software2project.models.brand;
 import software2project.models.user;
 import software2project.repository.brandRepository;
-import software2project.repository.productRepository;
 import software2project.repository.userRepository;
 
 /**

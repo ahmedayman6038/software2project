@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import software2project.Main;
-import software2project.models.*;
-import software2project.repository.*;
+import software2project.models.normalProduct;
+import software2project.models.onlineProduct;
+import software2project.models.user;
+import software2project.repository.brandRepository;
+import software2project.repository.productRepository;
+import software2project.repository.userRepository;
 
 /**
  * This is a Product Controller Responsible for Handling Requests and Operations Related to Product Model 
