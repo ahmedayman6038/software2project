@@ -16,8 +16,8 @@ public class normalProduct extends product{
 		super();
 	}
 
-	public normalProduct(String name, float startPrice, float endPrice, String category, Set<storeProducts> stores) {
-		super(name, startPrice, endPrice, category, stores);
+	public normalProduct(String name, float startPrice, float endPrice, String category, Set<storeProducts> stores,Set<buyProducts> users) {
+		super(name, startPrice, endPrice, category, stores,users);
 	}
 
 }

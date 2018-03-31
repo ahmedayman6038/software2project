@@ -39,15 +39,35 @@
     <div class="container body-content" th:attr="ng-init='init('+${storeId}+')'" >
      <div class="dashboard">
 	<h1 th:text="${storeName} + ' Statistics'"></h1>
+	<hr />
 	
-	<ul class="nav nav-pills" ng-init="toggle1 = true;toggle2 = true;toggle3 = true">
-  <li role="presentation" th:if="${statisticAdded1 != false}" ng-class="{active:toggle1}" ><a href="" th:text="${statisticName1}" ng-click="toggle1=!toggle1" ></a></li>
-  <li role="presentation" th:if="${statisticAdded2 != false}" ng-class="{active:toggle2}" ><a href="" th:text="${statisticName2}" ng-click="toggle2=!toggle2"></a></li>
-  <li role="presentation" th:if="${statisticAdded3 != false}" ng-class="{active:toggle3}"><a href="" th:text="${statisticName3}" ng-click="toggle3=!toggle3"></a></li>
-</ul>
+	<div class="btn-group btn-group-justified" role="group" aria-label="..." ng-init="toggle1 = true;toggle2 = true;toggle3 = true;toggle4 = true">
+  <div class="btn-group" role="group"  th:if="${statisticAdded1 != false}">
+    <button type="button" class="btn btn-default" ng-class="{active:toggle1}" th:text="${statisticName1}" ng-click="toggle1=!toggle1"></button>
+  </div>
+  <div class="btn-group" role="group"  th:if="${statisticAdded2 != false}">
+     <button type="button" class="btn btn-default" ng-class="{active:toggle2}" th:text="${statisticName2}" ng-click="toggle2=!toggle2"></button>
+  </div>
+  <div class="btn-group" role="group"  th:if="${statisticAdded3 != false}">
+    <button type="button" class="btn btn-default" ng-class="{active:toggle3}" th:text="${statisticName3}" ng-click="toggle3=!toggle3"></button>
+  </div>
+   <div class="btn-group" role="group"  th:if="${statisticAdded4 != false}">
+    <button type="button" class="btn btn-default" ng-class="{active:toggle4}" th:text="${statisticName4}" ng-click="toggle4=!toggle4"></button>
+  </div>
+</div>
+
+
 <div class="row counters">
 
-    <div class="col-md-3" ng-show="toggle1" th:if="${statisticAdded1 != false}">
+<div class="col-md-3" ng-show="toggle1" th:if="${statisticAdded1 != false}">
+    <div class="counter">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      <h2 class="count-title" >{{number}}</h2>
+       <p class="count-text ">Product In Store</p>
+    </div>
+  </div>
+  
+    <div class="col-md-3" ng-show="toggle2" th:if="${statisticAdded2 != false}">
     <div class="counter">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       <h2 class="count-title" >{{viewed}}</h2>
@@ -55,7 +75,7 @@
     </div>
   </div>
 
-  <div class="col-md-3" ng-show="toggle2" th:if="${statisticAdded2 != false}">
+  <div class="col-md-3" ng-show="toggle3" th:if="${statisticAdded3 != false}">
     <div class="counter">
     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
       <h2 class="count-title">{{buyed}}</h2>
@@ -63,7 +83,7 @@
     </div>
 </div>
 
-  <div class="col-md-3" ng-show="toggle3" th:if="${statisticAdded3 != false}">
+  <div class="col-md-3" ng-show="toggle4" th:if="${statisticAdded4 != false}">
     <div class="counter">
     <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
       <h4>Last 3 sold out products</h4>

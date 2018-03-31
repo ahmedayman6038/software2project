@@ -30,6 +30,10 @@ public class store {
 
 	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<storeProducts> products;
+	
+	@OneToMany(mappedBy="store")
+    private Set<buyProducts> buyed;
+    
 	public store() {
 		
 	}
@@ -39,7 +43,6 @@ public class store {
 		this.user = user;
 		this.products = products;
 		this.accepted = accepted;
-
 	}
 	public Integer getId() {
 		return id;

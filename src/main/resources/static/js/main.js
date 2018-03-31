@@ -2,29 +2,37 @@ var myApp = angular.module("myApp",[]);
 myApp.controller("myCtr",function ($scope,$http){
 	 $scope.init = function(id)
 	  {
-		 $scope.userId = id;
-		 $http.get("/getViewed/"+$scope.userId)
+		 $scope.storeId = id;
+		 $http.get("/getProductsNumber/"+$scope.storeId)
+		  .then(function(response) {
+		      $scope.number = response.data;
+		  });
+		 $http.get("/getViewed/"+$scope.storeId)
 		  .then(function(response) {
 		      $scope.viewed = response.data;
 		  });
-		 $http.get("/getBuyed/"+$scope.userId)
+		 $http.get("/getBuyed/"+$scope.storeId)
 		  .then(function(response) {
 		      $scope.buyed = response.data;
 		  });
-		 $http.get("/getSoldOut/"+$scope.userId)
+		 $http.get("/getSoldOut/"+$scope.storeId)
 		  .then(function(response) {
 		      $scope.products = response.data;
 		  });
 		 setInterval(function(){
-			 $http.get("/getViewed/"+$scope.userId)
+			 $http.get("/getProductsNumber/"+$scope.storeId)
+			  .then(function(response) {
+			      $scope.number = response.data;
+			  });
+			 $http.get("/getViewed/"+$scope.storeId)
 			  .then(function(response) {
 			      $scope.viewed = response.data;
 			  });
-			 $http.get("/getBuyed/"+$scope.userId)
+			 $http.get("/getBuyed/"+$scope.storeId)
 			  .then(function(response) {
 			      $scope.buyed = response.data;
 			  });
-			 $http.get("/getSoldOut/"+$scope.userId)
+			 $http.get("/getSoldOut/"+$scope.storeId)
 			  .then(function(response) {
 			      $scope.products = response.data;
 			  });

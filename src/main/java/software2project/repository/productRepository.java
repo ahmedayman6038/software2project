@@ -6,6 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 import software2project.models.normalProduct;
 import software2project.models.onlineProduct;
 import software2project.models.product;
+import software2project.models.storeProducts;
+import software2project.models.user;
 
 
 
@@ -26,4 +28,10 @@ public interface productRepository extends CrudRepository<product, Integer> {
 	  
 	 @Query("select s from onlineProduct s where s.id = ?1")
 	 onlineProduct getOnlineProduct(Integer id);
+	 
+	 @Query("select s from product s where s.id = ?1")
+	 product findById(Integer id);
+	 
+	 @Query("select s from storeProducts s where s.product.id = ?1 and s.store.id = ?2")
+	 storeProducts getStoreProduct(Integer pid,Integer sid);
 }

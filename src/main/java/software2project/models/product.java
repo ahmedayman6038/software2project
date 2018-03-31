@@ -22,22 +22,24 @@ public class product {
 	private float startPrice;
 	private float endPrice;
 	private String category;
-	/*@ManyToOne
-	@JoinColumn(name="brand_id", nullable=false)
-	private brand brand;*/
+
 	@OneToMany(mappedBy = "product")
 	private Set<storeProducts> stores;
     
+	@OneToMany(mappedBy = "product")
+	private Set<buyProducts> users;
+	
 	public product() {
 		
 	}
-	public product(String name, float startPrice, float endPrice, String category, Set<storeProducts> stores ) {
+	public product(String name, float startPrice, float endPrice, String category, Set<storeProducts> stores,Set<buyProducts> users ) {
 		super();
 		this.name = name;
 		this.startPrice = startPrice;
 		this.endPrice = endPrice;
 		this.category = category;
 		this.stores = stores;
+		this.users = users;
 	}
 	public Integer getId() {
 		return id;
@@ -71,5 +73,11 @@ public class product {
 	}
 	public void setStores(Set<storeProducts> stores) {
 		this.stores = stores;
+	}
+	public Set<buyProducts> getUsers() {
+		return users;
+	}
+	public void setUsers(Set<buyProducts> users) {
+		this.users = users;
 	}
 }

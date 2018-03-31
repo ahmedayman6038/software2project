@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import software2project.models.normalStore;
 import software2project.models.onlineStore;
+import software2project.models.product;
 import software2project.models.store;
 import software2project.models.storeProducts;
 
@@ -36,8 +37,14 @@ public interface storeRepository extends CrudRepository<store, Integer> {
 	  @Query("select sum(s.userViewed) from storeProducts s where s.store.id = ?1")
 	  Integer getViewedProduct(Integer storeId);
 	  
-	  @Query("select sum(s.userBuyed) from storeProducts s where s.store.id = ?1")
+	  @Query("select count(s) from buyProducts s where s.store.id = ?1")
 	  Integer getBuyedProduct(Integer storeId);
+	  
+	  @Query("select count(s) from storeProducts s where s.store.id = ?1")
+	  Integer getProductsInStore(Integer storeId);
+	  
+	  @Query("select s from store s where s.id = ?1")
+	  store findById(Integer id);
 	  
 	  @Query("select s from storeProducts s where s.store.id = ?1 and s.lastBuyedDate IS NOT NULL ORDER BY s.lastBuyedDate DESC")
 	  List<storeProducts> getSoldOutProduct(Integer storeId);

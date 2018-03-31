@@ -50,43 +50,76 @@
 </div>
 
     <div class="container body-content">
-     <h2>Products</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Category
-        </th>
-         <th>
-            Brand
-        </th>
-        <th>
-            Store
-        </th>
-        <th>
-            Price
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
+<form th:action="@{'/buy/' + ${storeProduct.product.id} + '/' + ${storeProduct.store.id}}"  method="post">
+   <div class="form-horizontal">
+        <h4>Buy Product</h4>
+        <hr/>
+        <div class="form-group">
+            <label class="control-label col-md-2">Product Name</label>
+            <div class="col-md-10">
+                <label th:text="${storeProduct.product.name}"></label>
+            </div>
+        </div>
+        
+         <div class="form-group">
+            <label class="control-label col-md-2">Product Category</label>
+            <div class="col-md-10">
+                <label th:text="${storeProduct.product.category}"></label>
+            </div>
+        </div>
+        
+         <div class="form-group">
+            <label class="control-label col-md-2">Product Brand</label>
+            <div class="col-md-10">
+                <label th:text="${storeProduct.brand.name}"></label>
+            </div>
+        </div>
+        
+         <div class="form-group">
+            <label class="control-label col-md-2">Product Store</label>
+            <div class="col-md-10">
+                <label th:text="${storeProduct.store.name}"></label>
+            </div>
+        </div>
+        
+         <div class="form-group">
+            <label class="control-label col-md-2">Product Price</label>
+            <div class="col-md-10">
+                <label th:text="${storeProduct.price}"></label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-md-2">Quantity</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control text-box single-line" name="quantity" id="quantity" required="required" />
+                <span class="text-danger" th:text="${error}"></span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-md-2">Shipping Address</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control text-box single-line" name="address" id="address" required="required" />
+            </div>
+        </div>
 
-	<tr th:each = "product: ${products}">
-		<tr th:each = "stores: ${product.stores}">
-        	<td th:text="${product.name}"></td>
-        	<td th:text="${product.category}"></td>
-        	<td th:text="${stores.brand.name}"></td>
-        	<td th:text="${stores.store.name}"></td>
-      		<td th:text="${stores.price}"></td>
-     	   <td>
-        	    <a class="btn btn-default" th:href="@{'/view/' + ${product.id} + '/' + ${stores.store.id}}" role="button">View</a>
-        	</td>
-        </tr>
-    </tr>   
+        <div class="form-group">
+            <label class="control-label col-md-2">agree on agreement</label>
+            <div class="col-md-10">
+				<input type="checkbox" class="" name="agree" required="required" />
+            </div>
+        </div>
+       
 
-</table>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Buy" class="btn btn-default" name="submit" />
+            </div>
+        </div>
+    </div>
+</form>
                  
    <hr />
         <footer>

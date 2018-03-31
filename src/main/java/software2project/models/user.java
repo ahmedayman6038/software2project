@@ -2,6 +2,7 @@ package software2project.models;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,19 +25,21 @@ public class user {
 	private String name;
 	private String password;
 	private String type;
-	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<buyProducts> buyed;
 	@OneToMany(mappedBy="user")
     private Set<store> store;
 	
 	public user() {
 		
 	}
-	public user(String email, String name, String password, String type) {
+	public user(String email, String name, String password, String type,Set<buyProducts> buyed) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.password = password;
 		this.type = type;
+		this.buyed = buyed;
 	}
 	public Integer getId() {
 		return id;
@@ -73,5 +76,11 @@ public class user {
 	}
 	public void setStore(Set<store> store) {
 		this.store = store;
+	}
+	public Set<buyProducts> getBuyed() {
+		return buyed;
+	}
+	public void setBuyed(Set<buyProducts> buyed) {
+		this.buyed = buyed;
 	}
 }

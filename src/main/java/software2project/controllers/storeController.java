@@ -1,5 +1,6 @@
 package software2project.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import software2project.Main;
 import software2project.models.*;
 import software2project.repository.*;
@@ -140,6 +144,7 @@ public class storeController {
 			if(price < nproduct.getStartPrice() || price > nproduct.getEndPrice()) {
 				model.addAttribute("error", "The Price Must Be Between " + nproduct.getStartPrice() +" and "+ nproduct.getEndPrice());
 				model.addAttribute("products", productRepo.getNormalProducts());
+				model.addAttribute("brands", brandRepo.findAll());
 				model.addAttribute("storeId", storeId);
 				model.addAttribute("type", type);
 				return "addProductToStore";
@@ -150,7 +155,6 @@ public class storeController {
 			storeProduct.setBrand(brand);
 			storeProduct.setPrice(price);
 			storeProduct.setQuantity(quantity);
-			storeProduct.setUserBuyed(0);
 			storeProduct.setUserViewed(0);
 			nstore.getProducts().add(storeProduct);
 			productRepo.save(nproduct);
@@ -162,6 +166,7 @@ public class storeController {
 			if(price < oproduct.getStartPrice() || price > oproduct.getEndPrice()) {
 				model.addAttribute("error", "The Price Must Be Between ");
 				model.addAttribute("products", productRepo.getOnlineProducts());
+				model.addAttribute("brands", brandRepo.findAll());
 				model.addAttribute("storeId", storeId);
 				model.addAttribute("type", type);
 				return "addProductToStore";
@@ -172,7 +177,6 @@ public class storeController {
 			storeProduct.setBrand(brand);
 			storeProduct.setPrice(price);
 			storeProduct.setQuantity(quantity);
-			storeProduct.setUserBuyed(0);
 			storeProduct.setUserViewed(0);
 			ostore.getProducts().add(storeProduct);
 			productRepo.save(oproduct);
@@ -181,5 +185,46 @@ public class storeController {
 		}
 	}
 	
+	@GetMapping("/getViewed/{id}")
+	@ResponseBody
+	public Integer getViewedProduct(@PathVariable Integer id) {
+		return storeRepo.getViewedProduct(id);
+	}
+	
+	@GetMapping("/getProductsNumber/{id}")
+	@ResponseBody
+	public Integer getProductsNumber(@PathVariable Integer id) {
+		return storeRepo.getProductsInStore(id);
+	}
+	
+	@GetMapping("/getSoldOut/{id}")
+	@ResponseBody
+	public List<String> getSoldOutProduct(@PathVariable Integer id) {
+		List<storeProducts> products = storeRepo.getSoldOutProduct(id);
+		List<String> names = new ArrayList<String>();
+		for(int i=0;i<products.size();i++) {
+			if(i==3) {
+				break;
+			}
+			names.add(products.get(i).getProduct().getName());
+		}
+		return names;
+
+	}
+	
+	@GetMapping("/getBuyed/{id}")
+	@ResponseBody
+	public Integer getBuyedProduct(@PathVariable Integer id) {
+		return storeRepo.getBuyedProduct(id);
+	}
+	
+	@PostMapping("/acceptStore/{storeId}")
+	@ResponseBody
+	public Integer acceptStore(@PathVariable Integer storeId) {
+		store s = storeRepo.findOne(storeId);
+		s.setAccepted(true);
+		storeRepo.save(s);
+		return s.getId();
+	}
 	
 }
