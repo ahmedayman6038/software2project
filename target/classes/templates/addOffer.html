@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" ng-app="myApp">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -24,8 +24,8 @@
                     <a href="/" class="navbar-brand">Online Market</a>
             </div>
             <div class="navbar-collapse collapse">
-               	<ul class="nav navbar-nav">
-                    <li><a href="/addStore"  th:if="${type == 'storeOwner'}">Add Store</a></li>
+ 				<ul class="nav navbar-nav">
+                    <li><a href="/dashboard/addStore"  th:if="${type == 'storeOwner'}">Add Store</a></li>
                     <li><a href="/dashboard/addCollaborator"  th:if="${type == 'storeOwner'}">Add Collaborator</a></li>
                	</ul>
             	<ul class="nav navbar-nav" style="float:right;"  th:if="${email != null}">
@@ -40,57 +40,49 @@
     <div class="container body-content">
          
          
-<h2>Add Product To Store</h2>
-         
-    <form  th:action="@{'/addProductToStore/' + ${type}}"  action="/addProductToStore" method="post">
-   <div class="form-horizontal">
-        <h4>Products</h4>
-        <hr/>
-       <input type="hidden" th:value="${storeId}" name="storeId" id="storeId"/> 
-       
-         <div class="form-group">
-            <label class="control-label col-md-2">Product Name</label>
-            <div class="col-md-10">
-            <select class="form-control text-box single-line" name="productId" id="productId">
-           		<option th:each = "product: ${products}" th:value="${product.id}" th:text="${product.name}" ></option>
-            </select>
-            </div>
-        </div>
-        
-         <div class="form-group">
-            <label class="control-label col-md-2">Product Brand</label>
-            <div class="col-md-10">
-            <select class="form-control text-box single-line" name="brand" id="brand">
-           		<option th:each = "brand: ${brands}" th:value="${brand.id}" th:text="${brand.name}" ></option>
-            </select>
-            </div>
-        </div>
-        
-         <div class="form-group">
-            <label class="control-label col-md-2">Price</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control text-box single-line" name="price" id="price"  required="required" />
-                <span class="text-danger" th:text="${error}"></span>
-            </div>
-        </div>
-        
-         <div class="form-group">
-            <label class="control-label col-md-2">Quantity</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control text-box single-line" name="quantity" id="quantity"  required="required" />
-                <span class="text-danger"></span>
-            </div>
-        </div>
+<h2>Create</h2>
 
+<form th:action="@{'/dashboard/offer/'+${type}+'/' + ${storeProduct.product.id} + '/' + ${storeProduct.store.id}}" method="post" >
+   <div class="form-horizontal">
+        <h4>Offer</h4>
+        <hr/>
        
         <div class="form-group">
+            <label class="control-label col-md-2">Discount Quantity</label>
+            <div class="col-md-10">
+            <select class="form-control text-box single-line" th:field="${storeProduct.offer}">
+           		<option value="5">5</option>
+           		<option value="10">10</option>
+           		<option value="15">15</option>
+           		<option value="20">20</option>
+           		<option value="25">25</option>
+           		<option value="30">30</option>
+           		<option value="35">35</option>
+           		<option value="40">40</option>
+           		<option value="45">45</option>
+           		<option value="50">50</option>
+           		<option value="55">55</option>
+           		<option value="60">60</option>
+           		<option value="65">65</option>
+           		<option value="70">70</option>
+           		<option value="75">75</option>
+           		<option value="80">80</option>
+           		<option value="85">85</option>
+           		<option value="90">90</option>
+           		<option value="95">95</option>
+           		<option value="100">100</option>
+            </select>
+            </div>
+        </div>
+      
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" name="submit" />
+                <input type="submit" value="Add" class="btn btn-default" name="submit" />
             </div>
         </div>
     </div>
-</form>           
-   
+</form>
                  
                  
                  
@@ -104,7 +96,7 @@
 
 	
 	<script type="text/javascript"
-		src="/webjars/jquery/1.11.1/jquery.min.js"></script>	
+		src="/webjars/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript"

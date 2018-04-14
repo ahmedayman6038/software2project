@@ -11,7 +11,7 @@
     <title>Online Market</title>
 </head>
 <body>
-    <div class="header">
+     <div class="header">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -21,7 +21,7 @@
                     <span class="icon-bar"></span>
                 </button>
                    
-                    <a href="/dashboard" class="navbar-brand">Online Market</a>
+                    <a href="/" class="navbar-brand">Online Market</a>
             </div>
             <div class="navbar-collapse collapse">
                	<ul class="nav navbar-nav">
@@ -30,7 +30,7 @@
                	</ul>
             	<ul class="nav navbar-nav" style="float:right;"  th:if="${email != null}">
                	 	<li><a href="/" th:text="'Welcome ' + ${name}"></a></li>
-               	 	<li><a href="/logout">Logout <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
+               	 	<li><a href="/logout">Logout <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>               	 	
             	</ul>
             </div>
         </div>
@@ -38,41 +38,51 @@
 </div>
 
     <div class="container body-content">
-     <h3>Your Stores</h3>
-     
-     <ul class="nav nav-tabs" ng-init="tab = 1">
-  <li role="presentation" ng-class="{active:tab===1}"><a href="#" ng-click="tab = 1">Normal Store</a></li>
-  <li role="presentation" ng-class="{active:tab===2}"><a href="#" ng-click="tab = 2">Online Store</a></li>
-</ul>
-<br/>
-     <div ng-show="tab === 1">
-     
-     <div class="panel panel-default" th:each = "store1: ${stores1}">
-  <div class="panel-heading" th:text="${store1.name}"></div>
-  <div class="panel-body">
-  <p th:text="@{'Type: '+${store1.type}+' / Addreess: '+ ${store1.address}}"></p>	
-  <a class="btn btn-default" th:href="@{'/dashboard/' + ${store1.name} + '/' + ${store1.id}}" role="button">View</a>
- <a class="btn btn-default" th:href="@{'/dashboard/show/normal/' + ${store1.id}}" role="button">Products</a>
- <a class="btn btn-default" th:href="@{'/dashboard/history/' + ${store1.id}}" role="button">History</a>
+         
+               
+<form class="form-horizontal" method="post" th:object="${user}" th:action="@{'/dashboard/addCollaborator/' + ${oid}}" action="/dashboard/addCollaborator">
+<fieldset>
+
+<h2>Add Collaborator</h2>
+<hr />
+<div class="form-group">
+<label class="control-label col-md-4">User Name</label>
+<div class="col-md-4">
+    <input type="text" class="form-control input-md"  th:field="*{name}" required="required" />
+    <span class="text-danger"></span>
+</div>
+</div>
+
+<div class="form-group">
+<label class="control-label col-md-4">User Email</label>
+<div class="col-md-4">
+    <input type="text" class="form-control input-md"  th:field="*{email}" required="required" />
+    <span class="text-danger" th:text="${error}"></span>
+</div>
+</div>
+
+<div class="form-group">
+<label class="control-label col-md-4">User Password</label>
+<div class="col-md-4">
+    <input type="password" class="form-control input-md"  th:field="*{password}" required="required" />
+    <span class="text-danger"></span>
+</div>
+</div>
+
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton"></label>
+  <div class="col-md-4 center-block">
+    <input  type="submit" value="Registration" name="submit" class="btn btn-primary" />
   </div>
 </div>
 
- </div> 
- 
- <div ng-show="tab === 2">
-     
-     <div class="panel panel-default" th:each = "store2: ${stores2}">
-  <div class="panel-heading" th:text="${store2.name}"></div>
-  <div class="panel-body">
-  <p th:text="@{'Type: '+${store2.type}+' / WebSite: '+${store2.webSite}}"></p>
-  <a class="btn btn-default" th:href="@{'/dashboard/' + ${store2.name} + '/' + ${store2.id}}" role="button">View</a>
-<a class="btn btn-default" th:href="@{'/dashboard/show/online/' + ${store2.id}}" role="button">Products</a>
- <a class="btn btn-default" th:href="@{'/dashboard/history/' + ${store2.id}}" role="button">History</a>
-
-  </div>
-</div>
-
- </div>         
+</fieldset>
+</form>  
+                 
+                 
+                 
    <hr />
         <footer>
         <p>2018 - Online Market</p>
@@ -89,6 +99,5 @@
 		src="/webjars/angularjs/1.6.9/angular.min.js"></script>
 	<script type="text/javascript"
 		src="/../js/main.js"></script>
-	
 </body>
 </html>

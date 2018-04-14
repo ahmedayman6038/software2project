@@ -26,6 +26,7 @@
             <div class="navbar-collapse collapse">
                	<ul class="nav navbar-nav">
                     <li><a href="/dashboard/addStore"  th:if="${type == 'storeOwner'}">Add Store</a></li>
+                    <li><a href="/dashboard/addCollaborator"  th:if="${type == 'storeOwner'}">Add Collaborator</a></li>
                	</ul>
             	<ul class="nav navbar-nav" style="float:right;"  th:if="${email != null}">
                	 	<li><a href="/" th:text="'Welcome ' + ${name}"></a></li>
@@ -51,7 +52,8 @@
   <div class="panel-body">
   <p th:text="@{'Type: '+${store1.type}+' / Addreess: '+ ${store1.address}}"></p>	
   <a class="btn btn-default" th:href="@{'/dashboard/' + ${store1.name} + '/' + ${store1.id}}" role="button">View</a>
-  <a class="btn btn-default" th:href="@{'/dashboard/add/normal/' + ${store1.id}}" role="button">Add Product</a>
+ <a class="btn btn-default" th:href="@{'/dashboard/show/normal/' + ${store1.id}}" role="button">Products</a>
+ <a class="btn btn-default" th:href="@{'/dashboard/history/' + ${store1.id}}" role="button">History</a>
   </div>
 </div>
 
@@ -64,7 +66,9 @@
   <div class="panel-body">
   <p th:text="@{'Type: '+${store2.type}+' / WebSite: '+${store2.webSite}}"></p>
   <a class="btn btn-default" th:href="@{'/dashboard/' + ${store2.name} + '/' + ${store2.id}}" role="button">View</a>
-  <a class="btn btn-default" th:href="@{'/dashboard/add/online/' + ${store2.id}}" role="button">Add Product</a>
+<a class="btn btn-default" th:href="@{'/dashboard/show/online/' + ${store2.id}}" role="button">Products</a>
+ <a class="btn btn-default" th:href="@{'/dashboard/history/' + ${store2.id}}" role="button">History</a>
+
   </div>
 </div>
 

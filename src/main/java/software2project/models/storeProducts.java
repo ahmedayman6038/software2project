@@ -30,12 +30,13 @@ public class storeProducts implements Serializable {
 	private Float price;
 	private Integer userViewed;
 	private Integer quantity;
+	private Integer offer;
 	private Date lastBuyedDate;
 	
 	public storeProducts() {
 		
 	}
-	public storeProducts(store store, product product,brand brand,Float price, Integer userViewed,Integer quantity, Date lastBuyedDate) {
+	public storeProducts(store store, product product,brand brand,Float price, Integer userViewed,Integer quantity, Integer offer,Date lastBuyedDate) {
 		super();
 		this.store = store;
 		this.product = product;
@@ -43,6 +44,7 @@ public class storeProducts implements Serializable {
 		this.price = price;
 		this.userViewed = userViewed;
 		this.quantity = quantity;
+		this.offer = offer;
 		this.lastBuyedDate = lastBuyedDate;
 	}
 	public store getStore() {
@@ -68,6 +70,12 @@ public class storeProducts implements Serializable {
 	}
 	public void setPrice(Float price) {
 		this.price = price;
+	}
+	public Integer getOffer() {
+		return offer;
+	}
+	public void setOffer(Integer offer) {
+		this.offer = offer;
 	}
 	public Integer getUserViewed() {
 		return userViewed;

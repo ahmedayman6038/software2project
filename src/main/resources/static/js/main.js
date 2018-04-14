@@ -1,4 +1,5 @@
 var myApp = angular.module("myApp",[]);
+var myApp2 = angular.module("myApp2",[]);
 myApp.controller("myCtr",function ($scope,$http){
 	 $scope.init = function(id)
 	  {
@@ -50,4 +51,17 @@ myApp.controller("myCtr",function ($scope,$http){
 		    	console.log("Faild");
 		    });
 	  }
+});
+myApp2.controller("myCtr2",function ($scope,$http){
+	$scope.totalprice = 0;
+	  $scope.check = function() {
+		  var quan = $scope.quantity;
+		  if(quan == null || quan === ""){
+			  quan = 0;
+			}
+		  $http.get("/calculate/"+$scope.price+"/"+quan)
+		  .then(function(response) {
+		      $scope.totalprice = response.data;
+		  });
+	    }
 });

@@ -69,6 +69,9 @@
         <th>
             Price
         </th>
+        <th>
+            Offer
+        </th>
         <th></th>
         <th></th>
     </tr>
@@ -80,6 +83,7 @@
         	<td th:text="${stores.brand.name}"></td>
         	<td th:text="${stores.store.name}"></td>
       		<td th:text="${stores.price}"></td>
+      		<td th:text="${stores.offer}"></td>
      	   <td>
         	    <a class="btn btn-default" th:href="@{'/view/' + ${product.id} + '/' + ${stores.store.id}}" role="button">View</a>
         	</td>

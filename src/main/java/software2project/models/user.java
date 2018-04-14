@@ -25,20 +25,24 @@ public class user {
 	private String name;
 	private String password;
 	private String type;
+	private Integer collaborated;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<buyProducts> buyed;
 	@OneToMany(mappedBy="user")
     private Set<store> store;
+    @OneToMany(mappedBy="user")
+    private Set<history> history;
 	
 	public user() {
 		
 	}
-	public user(String email, String name, String password, String type,Set<buyProducts> buyed) {
+	public user(String email, String name, String password, String type,Integer collaborated, Set<buyProducts> buyed) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.password = password;
 		this.type = type;
+		this.collaborated = collaborated;
 		this.buyed = buyed;
 	}
 	public Integer getId() {
@@ -71,6 +75,12 @@ public class user {
 	public void setType(String type) {
 		this.type = type;
 	}
+	public Integer getCollaborated() {
+		return collaborated;
+	}
+	public void setCollaborated(Integer collaborated) {
+		this.collaborated = collaborated;
+	}
 	public Set<store> getStore() {
 		return store;
 	}
@@ -82,5 +92,11 @@ public class user {
 	}
 	public void setBuyed(Set<buyProducts> buyed) {
 		this.buyed = buyed;
+	}
+	public Set<history> getHistory() {
+		return history;
+	}
+	public void setHistory(Set<history> history) {
+		this.history = history;
 	}
 }

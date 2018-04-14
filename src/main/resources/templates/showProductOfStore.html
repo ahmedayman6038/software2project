@@ -25,16 +25,8 @@
             </div>
             <div class="navbar-collapse collapse">
  				<ul class="nav navbar-nav">
-                    <li><a href="/addProduct"  th:if="${type == 'admin'}">Add Product</a></li>
-               	</ul>
-               	<ul class="nav navbar-nav">
-                    <li><a href="/addBrand"  th:if="${type == 'admin'}">Add Brand</a></li>
-               	</ul>
-               	<ul class="nav navbar-nav">
-                    <li><a href="/addStatistic"  th:if="${type == 'admin'}">Add Statistic</a></li>
-               	</ul>
-               	<ul class="nav navbar-nav">
-                    <li><a href="/showStores"  th:if="${type == 'admin'}">Stores</a></li>
+                    <li><a href="/dashboard/addStore"  th:if="${type == 'storeOwner'}">Add Store</a></li>
+                    <li><a href="/dashboard/addCollaborator"  th:if="${type == 'storeOwner'}">Add Collaborator</a></li>
                	</ul>
                	 <ul class="nav navbar-nav" style="float:right;"  th:if="${email == null}">
                	 	<li><a href="/login">Login <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a></li>
@@ -50,8 +42,10 @@
 </div>
 
     <div class="container body-content">
-     <h2>Products</h2>
-
+     <h2>Products Of Store</h2>
+   <a class="btn btn-default" th:href="@{'/dashboard/add/'+${type}+'/' + ${storeId}}" role="button">Add Product</a>
+	<br/>
+	<br/>
 <table class="table">
     <tr>
         <th>
@@ -64,30 +58,33 @@
             Brand
         </th>
         <th>
-            Store
-        </th>
-        <th>
             Price
         </th>
         <th>
             Offer
         </th>
+         <th>
+            Quantity
+        </th>
+        <th></th>
+        <th></th>
         <th></th>
         <th></th>
     </tr>
 
-	<tr th:each = "product: ${products}">
-		<tr th:each = "stores: ${product.stores}">
-        	<td th:text="${product.name}"></td>
-        	<td th:text="${product.category}"></td>
-        	<td th:text="${stores.brand.name}"></td>
-        	<td th:text="${stores.store.name}"></td>
-      		<td th:text="${stores.price}"></td>
-      		<td th:text="${stores.offer}"></td>
+	<tr th:each = "sproduct: ${products}">
+        	<td th:text="${sproduct.product.name}"></td>
+        	<td th:text="${sproduct.product.category}"></td>
+        	<td th:text="${sproduct.brand.name}"></td>
+      		<td th:text="${sproduct.price}"></td>
+      		<td th:text="${sproduct.offer}"></td>
+      		<td th:text="${sproduct.quantity}"></td>
      	   <td>
-        	    <a class="btn btn-default" th:href="@{'/view/' + ${product.id} + '/' + ${stores.store.id}}" role="button">View</a>
+        	    <a class="btn btn-default" th:href="@{'/dashboard/edit/'+${type}+'/' + ${sproduct.product.id} + '/' + ${storeId}}" role="button">Edit</a>
+        	    <a class="btn btn-default" th:href="@{'/dashboard/delete/'+${type}+'/' + ${sproduct.product.id} + '/' + ${storeId}}" role="button">Delete</a>
+        	    <a class="btn btn-default" th:href="@{'/dashboard/offer/'+${type}+'/' + ${sproduct.product.id} + '/' + ${storeId}}" role="button">Add Offer</a>
+        	    <a class="btn btn-default" th:href="@{'/dashboard/dOffer/'+${type}+'/' + ${sproduct.product.id} + '/' + ${storeId}}" role="button">Delete Offer</a>      	   
         	</td>
-        </tr>
     </tr>   
 
 </table>

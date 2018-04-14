@@ -23,6 +23,12 @@ public interface productRepository extends CrudRepository<product, Integer> {
 	 @Query("select s from onlineProduct s")
 	 List<onlineProduct> getOnlineProducts();
 	 
+	 @Query("select s from storeProducts s where s.store.id = ?1")
+	 List<storeProducts> getStoreNormalProducts(Integer sid);
+	 
+	 @Query("select s from storeProducts s where s.store.id = ?1")
+	 List<storeProducts> getStoreOnlineProducts(Integer sid);
+	 
 	 @Query("select s from normalProduct s where s.id = ?1")
 	 normalProduct getNormalProduct(Integer id);
 	  

@@ -11,7 +11,7 @@
     <title>Online Market</title>
 </head>
 <body>
-     <div class="header">
+    <div class="header">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -24,13 +24,17 @@
                     <a href="/" class="navbar-brand">Online Market</a>
             </div>
             <div class="navbar-collapse collapse">
-               	<ul class="nav navbar-nav">
-                    <li><a href="/addStore"  th:if="${type == 'storeOwner'}">Add Store</a></li>
+ 				<ul class="nav navbar-nav">
+                    <li><a href="/dashboard/addStore"  th:if="${type == 'storeOwner'}">Add Store</a></li>
                     <li><a href="/dashboard/addCollaborator"  th:if="${type == 'storeOwner'}">Add Collaborator</a></li>
                	</ul>
+               	 <ul class="nav navbar-nav" style="float:right;"  th:if="${email == null}">
+               	 	<li><a href="/login">Login <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a></li>
+                 	<li><a href="/register">Registration <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span></a></li>
+            	</ul>
             	<ul class="nav navbar-nav" style="float:right;"  th:if="${email != null}">
                	 	<li><a href="/" th:text="'Welcome ' + ${name}"></a></li>
-               	 	<li><a href="/logout">Logout <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>               	 	
+               	 	<li><a href="/logout">Logout <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
             	</ul>
             </div>
         </div>
@@ -38,62 +42,61 @@
 </div>
 
     <div class="container body-content">
-         
-         
-<h2>Add Product To Store</h2>
-         
-    <form  th:action="@{'/addProductToStore/' + ${type}}"  action="/addProductToStore" method="post">
+
+<form th:action="@{'/dashboard/edit/'+${type}+'/' + ${storeProduct.product.id} + '/' + ${storeProduct.store.id}}" th:object="${storeProduct}"  method="post">
    <div class="form-horizontal">
-        <h4>Products</h4>
+        <h4>Edit Product</h4>
         <hr/>
-       <input type="hidden" th:value="${storeId}" name="storeId" id="storeId"/> 
-       
-         <div class="form-group">
+        <div class="form-group">
             <label class="control-label col-md-2">Product Name</label>
             <div class="col-md-10">
-            <select class="form-control text-box single-line" name="productId" id="productId">
-           		<option th:each = "product: ${products}" th:value="${product.id}" th:text="${product.name}" ></option>
-            </select>
+                <label th:text="*{product.name}"></label>
             </div>
         </div>
         
          <div class="form-group">
+            <label class="control-label col-md-2">Product Category</label>
+            <div class="col-md-10">
+                <label th:text="*{product.category}"></label>
+            </div>
+        </div>
+        
+        
+         <div class="form-group">
             <label class="control-label col-md-2">Product Brand</label>
             <div class="col-md-10">
-            <select class="form-control text-box single-line" name="brand" id="brand">
+            <select class="form-control text-box single-line" th:field="*{brand}">
            		<option th:each = "brand: ${brands}" th:value="${brand.id}" th:text="${brand.name}" ></option>
             </select>
             </div>
         </div>
         
+        
          <div class="form-group">
-            <label class="control-label col-md-2">Price</label>
+            <label class="control-label col-md-2">Product Price</label>
             <div class="col-md-10">
-                <input type="text" class="form-control text-box single-line" name="price" id="price"  required="required" />
+            	<input type="text" class="form-control text-box single-line" th:field="*{price}"  required="required" />
                 <span class="text-danger" th:text="${error}"></span>
             </div>
         </div>
         
-         <div class="form-group">
+        <div class="form-group">
             <label class="control-label col-md-2">Quantity</label>
             <div class="col-md-10">
-                <input type="text" class="form-control text-box single-line" name="quantity" id="quantity"  required="required" />
+                <input type="text" class="form-control text-box single-line" th:field="*{quantity}" required="required" />
                 <span class="text-danger"></span>
             </div>
         </div>
-
+        
        
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" name="submit" />
+                <input type="submit" value="Edit" class="btn btn-default" name="submit" />
             </div>
         </div>
     </div>
-</form>           
-   
-                 
-                 
-                 
+</form>
                  
    <hr />
         <footer>
@@ -104,12 +107,13 @@
 
 	
 	<script type="text/javascript"
-		src="/webjars/jquery/1.11.1/jquery.min.js"></script>	
+		src="/webjars/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript"
 		src="/webjars/angularjs/1.6.9/angular.min.js"></script>
 	<script type="text/javascript"
 		src="/../js/main.js"></script>
+	
 </body>
 </html>

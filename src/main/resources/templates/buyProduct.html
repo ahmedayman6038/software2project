@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" ng-app="myApp">
+<html xmlns:th="http://www.thymeleaf.org" ng-app="myApp2">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -10,7 +10,7 @@
 	href="../css/main.css" />
     <title>Online Market</title>
 </head>
-<body>
+<body ng-controller="myCtr2">
     <div class="header">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -49,7 +49,7 @@
     </div>
 </div>
 
-    <div class="container body-content">
+    <div class="container body-content" th:attr="ng-init='price='+${storeProduct.price}+''">
 
 <form th:action="@{'/buy/' + ${storeProduct.product.id} + '/' + ${storeProduct.store.id}}"  method="post">
    <div class="form-horizontal">
@@ -86,15 +86,22 @@
          <div class="form-group">
             <label class="control-label col-md-2">Product Price</label>
             <div class="col-md-10">
-                <label th:text="${storeProduct.price}"></label>
+                <label>{{price}}</label>
             </div>
         </div>
         
         <div class="form-group">
             <label class="control-label col-md-2">Quantity</label>
             <div class="col-md-10">
-                <input type="text" class="form-control text-box single-line" name="quantity" id="quantity" required="required" />
+                <input type="number" ng-change="check()" ng-model="quantity" class="form-control text-box single-line" name="quantity" id="quantity"  required="required" />
                 <span class="text-danger" th:text="${error}"></span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-md-2">Total Price</label>
+            <div class="col-md-10">
+                <label>{{totalprice}}</label>
             </div>
         </div>
         

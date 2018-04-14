@@ -26,6 +26,7 @@
             <div class="navbar-collapse collapse">
                	<ul class="nav navbar-nav">
                     <li><a href="/dashboard/addStore"  th:if="${type == 'storeOwner'}">Add Store</a></li>
+                    <li><a href="/dashboard/addCollaborator"  th:if="${type == 'storeOwner'}">Add Collaborator</a></li>
                	</ul>
             	<ul class="nav navbar-nav" style="float:right;"  th:if="${email != null}">
                	 	<li><a href="/" th:text="'Welcome ' + ${name}"></a></li>

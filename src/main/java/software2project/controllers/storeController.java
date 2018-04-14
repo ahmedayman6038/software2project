@@ -1,6 +1,7 @@
 package software2project.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,15 +39,23 @@ public class storeController {
 	private statisticRepository statisticRepo;
 	@Autowired
 	private brandRepository brandRepo;
+	@Autowired
+	private historyRepository historyRepo;
 	
 	@GetMapping("/dashboard")
 	public String dashboard(Model model,HttpServletRequest request) {
 		String email = (String) request.getSession().getAttribute("email");
 		List<user> users = userRepo.checkType(email, "storeOwner");
-		if(users.size() > 0) {
+		List<user> users2 = userRepo.checkType(email, "collaborator");
+		if(users.size() > 0 || users2.size() > 0) {
 			Main.getSessionAttribute(model, request);
-			model.addAttribute("stores1", storeRepo.getNormalStores(users.get(0).getId()));
-			model.addAttribute("stores2", storeRepo.getOnlineStores(users.get(0).getId()));
+			if(users.size() > 0) {
+				model.addAttribute("stores1", storeRepo.getNormalStores(users.get(0).getId()));
+				model.addAttribute("stores2", storeRepo.getOnlineStores(users.get(0).getId()));
+			}else {
+				model.addAttribute("stores1", storeRepo.getNormalStores(users2.get(0).getCollaborated()));
+				model.addAttribute("stores2", storeRepo.getOnlineStores(users2.get(0).getCollaborated()));
+			}
 			return "dashboard";
 		}
 		return "redirect:/login";
@@ -117,11 +126,194 @@ public class storeController {
 		return "redirect:/dashboard/addStore";
 	}
 	
+	@GetMapping("/dashboard/show/{type}/{id}")
+	public String showProductOfStore(@PathVariable String type,@PathVariable Integer id,Model model,HttpServletRequest request) {
+		String email = (String) request.getSession().getAttribute("email");
+		List<user> users = userRepo.checkType(email, "storeOwner");
+		List<user> users2 = userRepo.checkType(email, "collaborator");
+		if(users.size() > 0 || users2.size() > 0) {
+			Main.getSessionAttribute(model, request);
+			if(type.equals("normal")) {
+				model.addAttribute("products", productRepo.getStoreNormalProducts(id));
+			}else {
+				model.addAttribute("products", productRepo.getStoreOnlineProducts(id));
+			}
+			model.addAttribute("storeId", id);
+			model.addAttribute("type", type);
+			return "showProductOfStore";
+		}
+		return "redirect:/login";
+	}
+	
+	@GetMapping("/dashboard/delete/{type}/{pid}/{sid}")
+	public String deleteProductOfStore(Model model,HttpServletRequest request,@PathVariable String type,@PathVariable Integer pid,@PathVariable Integer sid) {
+		storeProducts sproduct = new storeProducts();
+		sproduct = productRepo.getStoreProduct(pid, sid);
+		storeRepo.deleteStoreProducts(pid, sid);
+		String email = (String) request.getSession().getAttribute("email");
+		List<user> users = userRepo.findByEmail(email);
+		history history = new history();
+		history.setDate(new Date());
+		history.setBrandId(sproduct.getBrand().getId());
+		history.setProductName(sproduct.getProduct().getName());
+		history.setPrice(sproduct.getPrice());
+		history.setProductId(sproduct.getProduct().getId());
+		history.setStoreId(sproduct.getStore().getId());
+		history.setQuantity(sproduct.getQuantity());
+		history.setOffer(sproduct.getOffer());
+		history.setUserViewed(sproduct.getUserViewed());
+		history.setLastBuyedDate(sproduct.getLastBuyedDate());
+		history.setUser(users.get(0));
+		history.setType("deleteProduct");
+		historyRepo.save(history);
+		return "redirect:/dashboard/show/"+type+"/"+sid;
+	}
+	
+	@GetMapping("/dashboard/offer/{type}/{pid}/{sid}")
+	public String offerProductOfStore(Model model,HttpServletRequest request,@PathVariable String type,@PathVariable Integer pid,@PathVariable Integer sid) {
+		String email = (String) request.getSession().getAttribute("email");
+		List<user> users = userRepo.checkType(email, "storeOwner");
+		List<user> users2 = userRepo.checkType(email, "collaborator");
+		if(users.size() > 0 || users2.size() > 0) {
+			Main.getSessionAttribute(model, request);
+			model.addAttribute("storeProduct", productRepo.getStoreProduct(pid, sid));
+			model.addAttribute("type", type);
+			return "addOffer";
+		}
+		return "redirect:/login";
+	}
+	
+	@PostMapping("/dashboard/offer/{type}/{pid}/{sid}")
+	public String offerProductOfStore(Model model,HttpServletRequest request,@PathVariable String type,@PathVariable Integer pid,@PathVariable Integer sid,@RequestParam("offer") Integer offer) {
+		storeProducts sproduct = new storeProducts();
+		sproduct = productRepo.getStoreProduct(pid, sid);
+		storeRepo.addOffer(offer, pid, sid);
+		String email = (String) request.getSession().getAttribute("email");
+		List<user> users = userRepo.findByEmail(email);
+		history history = new history();
+		history.setDate(new Date());
+		history.setBrandId(sproduct.getBrand().getId());
+		history.setProductName(sproduct.getProduct().getName());
+		history.setPrice(sproduct.getPrice());
+		history.setProductId(sproduct.getProduct().getId());
+		history.setStoreId(sproduct.getStore().getId());
+		history.setQuantity(sproduct.getQuantity());
+		history.setOffer(sproduct.getOffer());
+		history.setUserViewed(sproduct.getUserViewed());
+		history.setLastBuyedDate(sproduct.getLastBuyedDate());
+		history.setUser(users.get(0));
+		history.setType("addOffer");
+		historyRepo.save(history);
+		return "redirect:/dashboard/show/"+type+"/"+sid;
+	}
+	
+	@GetMapping("/dashboard/dOffer/{type}/{pid}/{sid}")
+	public String dOfferProductOfStore(Model model,HttpServletRequest request,@PathVariable String type,@PathVariable Integer pid,@PathVariable Integer sid) {
+		storeProducts sproduct = new storeProducts();
+		sproduct = productRepo.getStoreProduct(pid, sid);
+		storeRepo.deleteOffer(pid, sid);
+		String email = (String) request.getSession().getAttribute("email");
+		List<user> users = userRepo.findByEmail(email);
+		history history = new history();
+		history.setDate(new Date());
+		history.setBrandId(sproduct.getBrand().getId());
+		history.setProductName(sproduct.getProduct().getName());
+		history.setPrice(sproduct.getPrice());
+		history.setProductId(sproduct.getProduct().getId());
+		history.setStoreId(sproduct.getStore().getId());
+		history.setQuantity(sproduct.getQuantity());
+		history.setOffer(sproduct.getOffer());
+		history.setUserViewed(sproduct.getUserViewed());
+		history.setLastBuyedDate(sproduct.getLastBuyedDate());
+		history.setUser(users.get(0));
+		history.setType("deleteOffer");
+		historyRepo.save(history);
+		return "redirect:/dashboard/show/"+type+"/"+sid;
+	}
+	
+	@GetMapping("/dashboard/edit/{type}/{pid}/{sid}")
+	public String editProductOfStore(Model model,HttpServletRequest request,@PathVariable String type,@PathVariable Integer pid,@PathVariable Integer sid) {
+		String email = (String) request.getSession().getAttribute("email");
+		List<user> users = userRepo.checkType(email, "storeOwner");
+		List<user> users2 = userRepo.checkType(email, "collaborator");
+		if(users.size() > 0 || users2.size() > 0) {
+			Main.getSessionAttribute(model, request);
+			model.addAttribute("storeProduct", productRepo.getStoreProduct(pid, sid));
+			model.addAttribute("brands", brandRepo.findAll());
+			model.addAttribute("type", type);
+			return "editProductOfStore";
+		}
+		return "redirect:/login";
+	}
+	
+	@PostMapping("/dashboard/edit/{type}/{pid}/{sid}")
+	public String editProductOfStore(Model model,HttpServletRequest request,@PathVariable String type,@ModelAttribute storeProducts sproducts,@PathVariable Integer pid,@PathVariable Integer sid) {
+		if(type.equals("normal")) {
+			normalProduct nproduct = productRepo.getNormalProduct(pid);
+			if(sproducts.getPrice() < nproduct.getStartPrice() || sproducts.getPrice() > nproduct.getEndPrice()) {
+				model.addAttribute("error", "The Price Must Be Between " + nproduct.getStartPrice() +" and "+ nproduct.getEndPrice());
+				model.addAttribute("storeProduct", productRepo.getStoreProduct(pid, sid));
+				model.addAttribute("brands", brandRepo.findAll());
+				model.addAttribute("type", type);
+				return "editProductOfStore";
+			}
+			storeProducts sproduct = new storeProducts();
+			sproduct = productRepo.getStoreProduct(pid, sid);
+			storeRepo.updateStoreProducts(sproducts.getPrice(), sproducts.getQuantity(), sproducts.getBrand().getId(),pid, sid);
+			String email = (String) request.getSession().getAttribute("email");
+			List<user> users = userRepo.findByEmail(email);
+			history history = new history();
+			history.setDate(new Date());
+			history.setBrandId(sproduct.getBrand().getId());
+			history.setProductName(sproduct.getProduct().getName());
+			history.setPrice(sproduct.getPrice());
+			history.setProductId(sproduct.getProduct().getId());
+			history.setStoreId(sproduct.getStore().getId());
+			history.setQuantity(sproduct.getQuantity());
+			history.setOffer(sproduct.getOffer());
+			history.setUserViewed(sproduct.getUserViewed());
+			history.setLastBuyedDate(sproduct.getLastBuyedDate());
+			history.setUser(users.get(0));
+			history.setType("editProduct");
+			historyRepo.save(history);
+			return "redirect:/dashboard/show/"+type+"/"+sid;
+		}else {
+			onlineProduct oproduct = productRepo.getOnlineProduct(pid);
+			if(sproducts.getPrice() < oproduct.getStartPrice() || sproducts.getPrice() > oproduct.getEndPrice()) {
+				model.addAttribute("error", "The Price Must Be Between " + oproduct.getStartPrice() +" and "+ oproduct.getEndPrice());
+				model.addAttribute("storeProduct", productRepo.getStoreProduct(pid, sid));
+				model.addAttribute("brands", brandRepo.findAll());
+				model.addAttribute("type", type);
+				return "editProductOfStore";
+			}
+			storeProducts sproduct = new storeProducts();
+			sproduct = productRepo.getStoreProduct(pid, sid);
+			storeRepo.updateStoreProducts(sproducts.getPrice(), sproducts.getQuantity(), sproducts.getBrand().getId(),pid, sid);
+			String email = (String) request.getSession().getAttribute("email");
+			List<user> users = userRepo.findByEmail(email);
+			history history = new history();
+			history.setDate(new Date());
+			history.setBrandId(sproduct.getBrand().getId());
+			history.setProductName(sproduct.getProduct().getName());
+			history.setPrice(sproduct.getPrice());
+			history.setProductId(sproduct.getProduct().getId());
+			history.setStoreId(sproduct.getStore().getId());
+			history.setQuantity(sproduct.getQuantity());
+			history.setUserViewed(sproduct.getUserViewed());
+			history.setLastBuyedDate(sproduct.getLastBuyedDate());
+			history.setUser(users.get(0));
+			history.setType("editProduct");
+			historyRepo.save(history);
+			return "redirect:/dashboard/show/"+type+"/"+sid;
+		}
+	}
+	
 	@GetMapping("/dashboard/add/{type}/{id}")
 	public String addProductToStore(@PathVariable String type,@PathVariable Integer id,Model model,HttpServletRequest request) {
 		String email = (String) request.getSession().getAttribute("email");
 		List<user> users = userRepo.checkType(email, "storeOwner");
-		if(users.size() > 0) {
+		List<user> users2 = userRepo.checkType(email, "collaborator");
+		if(users.size() > 0 || users2.size() > 0) {
 			Main.getSessionAttribute(model, request);
 			if(type.equals("normal")) {
 				model.addAttribute("products", productRepo.getNormalProducts());
@@ -137,7 +329,7 @@ public class storeController {
 	}
 	
 	@PostMapping("/addProductToStore/{type}")
-	public String addProductToStore(@PathVariable String type,@RequestParam("storeId") Integer storeId,@RequestParam("productId") Integer productId,@RequestParam("brand") brand brand,@RequestParam("quantity") Integer quantity,@RequestParam("price") Float price,Model model) {
+	public String addProductToStore(HttpServletRequest request,@PathVariable String type,@RequestParam("storeId") Integer storeId,@RequestParam("productId") Integer productId,@RequestParam("brand") brand brand,@RequestParam("quantity") Integer quantity,@RequestParam("price") Float price,Model model) {
 		if(type.equals("normal")) {
 			normalStore nstore = storeRepo.getNormalStore(storeId);
 			normalProduct nproduct = productRepo.getNormalProduct(productId);
@@ -158,13 +350,27 @@ public class storeController {
 			storeProduct.setUserViewed(0);
 			nstore.getProducts().add(storeProduct);
 			productRepo.save(nproduct);
-			storeRepo.save(nstore);	
-			return "redirect:/dashboard/add/"+type+"/"+storeId.toString();
+			storeRepo.save(nstore);
+			String email = (String) request.getSession().getAttribute("email");
+			List<user> users = userRepo.findByEmail(email);
+			history history = new history();
+			history.setDate(new Date());
+			history.setBrandId(brand.getId());
+			history.setProductName(nproduct.getName());
+			history.setPrice(price);
+			history.setProductId(productId);
+			history.setStoreId(storeId);
+			history.setQuantity(quantity);
+			history.setUser(users.get(0));
+			history.setUserViewed(0);
+			history.setType("addProduct");
+			historyRepo.save(history);
+			return "redirect:/dashboard/show/"+type+"/"+storeId.toString();
 		}else {
 			onlineStore ostore = storeRepo.getOnlineStore(storeId);
 			onlineProduct oproduct = productRepo.getOnlineProduct(productId);
 			if(price < oproduct.getStartPrice() || price > oproduct.getEndPrice()) {
-				model.addAttribute("error", "The Price Must Be Between ");
+				model.addAttribute("error", "The Price Must Be Between " + oproduct.getStartPrice() +" and "+ oproduct.getEndPrice());
 				model.addAttribute("products", productRepo.getOnlineProducts());
 				model.addAttribute("brands", brandRepo.findAll());
 				model.addAttribute("storeId", storeId);
@@ -181,7 +387,21 @@ public class storeController {
 			ostore.getProducts().add(storeProduct);
 			productRepo.save(oproduct);
 			storeRepo.save(ostore);
-			return "redirect:/dashboard/add/"+type+"/"+storeId.toString();
+			String email = (String) request.getSession().getAttribute("email");
+			List<user> users = userRepo.findByEmail(email);
+			history history = new history();
+			history.setDate(new Date());
+			history.setBrandId(brand.getId());
+			history.setProductName(oproduct.getName());
+			history.setPrice(price);
+			history.setProductId(productId);
+			history.setStoreId(storeId);
+			history.setQuantity(quantity);
+			history.setUser(users.get(0));
+			history.setUserViewed(0);
+			history.setType("addProduct");
+			historyRepo.save(history);
+			return "redirect:/dashboard/show/"+type+"/"+storeId.toString();
 		}
 	}
 	
@@ -225,6 +445,35 @@ public class storeController {
 		s.setAccepted(true);
 		storeRepo.save(s);
 		return s.getId();
+	}
+	
+	@GetMapping("/dashboard/addCollaborator")
+	public String addCollaborator(Model model,HttpServletRequest request) {
+		String email = (String) request.getSession().getAttribute("email");
+		List<user> users = userRepo.checkType(email, "storeOwner");
+		if(users.size() > 0) {
+			Main.getSessionAttribute(model, request);
+			model.addAttribute("user", new user());
+			model.addAttribute("oid", users.get(0).getId());
+			return "addCollaborator";
+		}
+		return "redirect:/login";
+
+	}
+	
+	@PostMapping("/dashboard/addCollaborator/{oid}")
+	public String addCollaborator(@ModelAttribute user user,Model model,@PathVariable Integer oid, HttpServletRequest request) {
+		List<user> users = userRepo.findByEmail(user.getEmail());
+		if(users.size() > 0) {
+			Main.getSessionAttribute(model, request);
+			model.addAttribute("error", "This email alerady exist");
+			return "addCollaborator";
+		} else {
+			user.setCollaborated(oid);
+			user.setType("collaborator");
+			userRepo.save(user);
+			return "redirect:/dashboard/addCollaborator";
+		}
 	}
 	
 }
