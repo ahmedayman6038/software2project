@@ -7,18 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import software2project.Main;
-import software2project.models.brand;
-import software2project.models.history;
-import software2project.models.product;
-import software2project.models.store;
-import software2project.models.storeProducts;
-import software2project.models.user;
-import software2project.repository.historyRepository;
-import software2project.repository.productRepository;
-import software2project.repository.storeRepository;
-import software2project.repository.userRepository;
+import software2project.models.*;
+import software2project.repository.*;
 
 @Controller
 public class historyController {

@@ -1,9 +1,7 @@
 package software2project.controllers;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import software2project.Main;
 import software2project.models.*;
 import software2project.repository.*;
@@ -405,47 +400,6 @@ public class storeController {
 		}
 	}
 	
-	@GetMapping("/getViewed/{id}")
-	@ResponseBody
-	public Integer getViewedProduct(@PathVariable Integer id) {
-		return storeRepo.getViewedProduct(id);
-	}
-	
-	@GetMapping("/getProductsNumber/{id}")
-	@ResponseBody
-	public Integer getProductsNumber(@PathVariable Integer id) {
-		return storeRepo.getProductsInStore(id);
-	}
-	
-	@GetMapping("/getSoldOut/{id}")
-	@ResponseBody
-	public List<String> getSoldOutProduct(@PathVariable Integer id) {
-		List<storeProducts> products = storeRepo.getSoldOutProduct(id);
-		List<String> names = new ArrayList<String>();
-		for(int i=0;i<products.size();i++) {
-			if(i==3) {
-				break;
-			}
-			names.add(products.get(i).getProduct().getName());
-		}
-		return names;
-
-	}
-	
-	@GetMapping("/getBuyed/{id}")
-	@ResponseBody
-	public Integer getBuyedProduct(@PathVariable Integer id) {
-		return storeRepo.getBuyedProduct(id);
-	}
-	
-	@PostMapping("/acceptStore/{storeId}")
-	@ResponseBody
-	public Integer acceptStore(@PathVariable Integer storeId) {
-		store s = storeRepo.findOne(storeId);
-		s.setAccepted(true);
-		storeRepo.save(s);
-		return s.getId();
-	}
 	
 	@GetMapping("/dashboard/addCollaborator")
 	public String addCollaborator(Model model,HttpServletRequest request) {

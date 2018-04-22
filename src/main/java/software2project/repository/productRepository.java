@@ -7,7 +7,6 @@ import software2project.models.normalProduct;
 import software2project.models.onlineProduct;
 import software2project.models.product;
 import software2project.models.storeProducts;
-import software2project.models.user;
 
 
 
