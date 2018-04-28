@@ -1,6 +1,5 @@
 package software2project.controllers;
 
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,8 +24,8 @@ public class historyController {
 	@GetMapping("/dashboard/history/{sid}")
 	public String showHistory(Model model,HttpServletRequest request,@PathVariable Integer sid) {
 		String email = (String) request.getSession().getAttribute("email");
-		List<user> users = userRepo.checkType(email, "storeOwner");
-		if(users.size() > 0) {
+		user user = userRepo.checkType(email, "storeOwner");
+		if(user != null) {
 			Main.getSessionAttribute(model, request);
 			model.addAttribute("historys", historyRepo.getStoreHistory(sid));
 			return "showHistory";
@@ -69,4 +68,5 @@ public class historyController {
 		historyRepo.deleteHistory(hid);
 		return "redirect:/dashboard/history/"+sid;
 	}
+	
 }

@@ -1,7 +1,6 @@
 package software2project.controllers;
 
 import java.util.Date;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,8 +37,8 @@ public class productController {
 	@GetMapping("/addProduct")
 	public String addProduct(Model model,HttpServletRequest request) {
 		String email = (String) request.getSession().getAttribute("email");
-		List<user> users = userRepo.checkType(email, "admin");
-		if(users.size() > 0) {
+		user user = userRepo.checkType(email, "admin");
+		if(user != null) {
 			Main.getSessionAttribute(model, request);
 			model.addAttribute("normalProduct", new normalProduct());
 			model.addAttribute("onlineProduct", new onlineProduct());

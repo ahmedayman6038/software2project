@@ -11,7 +11,7 @@ import software2project.models.history;
 
 
 public interface historyRepository extends CrudRepository<history, Integer>{
-	 @Query("select s from history s where s.storeId = ?1 ORDER BY s.id DESC")
+	  @Query("select s from history s where s.storeId = ?1 ORDER BY s.id DESC")
 	  List<history> getStoreHistory(Integer sid);
 	  
 	  @Transactional

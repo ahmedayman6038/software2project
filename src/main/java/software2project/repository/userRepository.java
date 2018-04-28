@@ -13,17 +13,18 @@ import software2project.models.user;
  */
 public interface userRepository extends CrudRepository<user, String> {
 	@Query("select s from user s where s.email = ?1")
-    List<user> findByEmail(String email);
+	public user findByEmail(String email);
     
     @Query("select s from user s where s.email = ?1 and s.password = ?2")
-    List<user> findUser(String email,String password);
+    public user findUser(String email,String password);
 
     @Query("select s from user s where s.email = ?1 and s.type = ?2")
-    List<user> checkType(String email,String type);
+    public user checkType(String email,String type);
     
     @Query("select s from buyProducts s where s.user.id = ?1")
-    List<buyProducts> checkFirstBuy(Integer uid);
+    public List<buyProducts> checkFirstBuy(Integer uid);
     
     @Query("select s from user s where s.id = ?1")
-	 user findById(Integer id);
+    public user findById(Integer id);
+    
 }
