@@ -7,6 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/**
+ * This is a BuyProducts Model Class
+ * @author Rick & morty
+ *
+ */
+
 @Entity
 public class buyProducts implements Serializable{
 	/**

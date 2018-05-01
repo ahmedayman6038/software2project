@@ -5,6 +5,12 @@ import org.springframework.stereotype.Service;
 import software2project.models.store;
 import software2project.repository.storeRepository;
 
+/**
+ * This is a Store Service Responsible For Business Logic Related to Store Controller 
+ * @author Rick & morty
+ *
+ */
+
 @Service
 public class storeService {
 	@Autowired

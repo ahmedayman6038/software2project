@@ -14,6 +14,12 @@ import software2project.models.user;
 import software2project.repository.historyRepository;
 import software2project.repository.userRepository;
 
+/**
+ * This is a History Service Responsible For Business Logic Related to History Controller 
+ * @author Rick & morty
+ *
+ */
+
 @Service
 public class historyService {
 	@Autowired

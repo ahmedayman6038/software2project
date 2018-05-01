@@ -9,7 +9,6 @@ import software2project.models.product;
 import software2project.models.storeProducts;
 
 
-
 /**
  * This is Product Repository Responsible for Querying the DataBase
  * @author Rick & morty

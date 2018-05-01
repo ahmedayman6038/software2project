@@ -8,6 +8,12 @@ import software2project.repository.productRepository;
 import software2project.repository.storeRepository;
 import software2project.repository.userRepository;
 
+/**
+ * This is a Product Service Responsible For Business Logic Related to Product Controller 
+ * @author Rick & morty
+ *
+ */
+
 @Service
 public class productService {
 	@Autowired

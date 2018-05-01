@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/**
+ * This is a History Model Class
+ * @author Rick & morty
+ *
+ */
 @Entity
 public class history {
 	@Id

@@ -6,6 +6,11 @@ import org.springframework.stereotype.Service;
 import software2project.models.user;
 import software2project.repository.userRepository;
 
+/**
+ * This is a User Service Responsible For Business Logic Related to User Controller 
+ * @author Rick & morty
+ *
+ */
 @Service
 public class userService {
 	@Autowired

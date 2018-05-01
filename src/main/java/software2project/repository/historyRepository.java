@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import software2project.models.history;
 
+/**
+ * This is History Repository Responsible for Querying the DataBase
+ * @author Rick & morty
+ *
+ */
 
 public interface historyRepository extends CrudRepository<history, Integer>{
 	  @Query("select s from history s where s.storeId = ?1 ORDER BY s.id DESC")

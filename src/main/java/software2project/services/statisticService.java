@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
 import software2project.models.storeProducts;
 import software2project.repository.storeRepository;
 
+/**
+ * This is a Statistic Service Responsible For Business Logic Related to Statistc Controller 
+ * @author Rick & morty
+ *
+ */
+
 @Service
 public class statisticService {
 	@Autowired
