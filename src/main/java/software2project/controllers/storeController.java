@@ -1,6 +1,5 @@
 package software2project.controllers;
 
-import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import software2project.Main;
 import software2project.models.*;
 import software2project.repository.*;
 import software2project.services.productService;
+import software2project.services.historyService;
 
 /**
  * This is a Store Controller Responsible for Handling Requests and Operations Related to Store Model 
@@ -35,9 +35,9 @@ public class storeController {
 	@Autowired
 	private brandRepository brandRepo;
 	@Autowired
-	private historyRepository historyRepo;
-	@Autowired
 	private productService productService;
+	@Autowired
+	private historyService historyService;
 	
 	@GetMapping("/dashboard")
 	public String dashboard(Model model,HttpServletRequest request) {
@@ -148,21 +148,7 @@ public class storeController {
 		sproduct = productRepo.getStoreProduct(pid, sid);
 		storeRepo.deleteStoreProducts(pid, sid);
 		String email = (String) request.getSession().getAttribute("email");
-		user user = userRepo.findByEmail(email);
-		history history = new history();
-		history.setDate(new Date());
-		history.setBrandId(sproduct.getBrand().getId());
-		history.setProductName(sproduct.getProduct().getName());
-		history.setPrice(sproduct.getPrice());
-		history.setProductId(sproduct.getProduct().getId());
-		history.setStoreId(sproduct.getStore().getId());
-		history.setQuantity(sproduct.getQuantity());
-		history.setOffer(sproduct.getOffer());
-		history.setUserViewed(sproduct.getUserViewed());
-		history.setLastBuyedDate(sproduct.getLastBuyedDate());
-		history.setUser(user);
-		history.setType("deleteProduct");
-		historyRepo.save(history);
+		historyService.addHistory(sproduct,email,"deleteProduct");
 		return "redirect:/dashboard/show/"+type+"/"+sid;
 	}
 	
@@ -186,21 +172,7 @@ public class storeController {
 		sproduct = productRepo.getStoreProduct(pid, sid);
 		storeRepo.addOffer(offer, pid, sid);
 		String email = (String) request.getSession().getAttribute("email");
-		user user = userRepo.findByEmail(email);
-		history history = new history();
-		history.setDate(new Date());
-		history.setBrandId(sproduct.getBrand().getId());
-		history.setProductName(sproduct.getProduct().getName());
-		history.setPrice(sproduct.getPrice());
-		history.setProductId(sproduct.getProduct().getId());
-		history.setStoreId(sproduct.getStore().getId());
-		history.setQuantity(sproduct.getQuantity());
-		history.setOffer(sproduct.getOffer());
-		history.setUserViewed(sproduct.getUserViewed());
-		history.setLastBuyedDate(sproduct.getLastBuyedDate());
-		history.setUser(user);
-		history.setType("addOffer");
-		historyRepo.save(history);
+		historyService.addHistory(sproduct,email,"addOffer");
 		return "redirect:/dashboard/show/"+type+"/"+sid;
 	}
 	
@@ -210,21 +182,7 @@ public class storeController {
 		sproduct = productRepo.getStoreProduct(pid, sid);
 		storeRepo.deleteOffer(pid, sid);
 		String email = (String) request.getSession().getAttribute("email");
-		user user = userRepo.findByEmail(email);
-		history history = new history();
-		history.setDate(new Date());
-		history.setBrandId(sproduct.getBrand().getId());
-		history.setProductName(sproduct.getProduct().getName());
-		history.setPrice(sproduct.getPrice());
-		history.setProductId(sproduct.getProduct().getId());
-		history.setStoreId(sproduct.getStore().getId());
-		history.setQuantity(sproduct.getQuantity());
-		history.setOffer(sproduct.getOffer());
-		history.setUserViewed(sproduct.getUserViewed());
-		history.setLastBuyedDate(sproduct.getLastBuyedDate());
-		history.setUser(user);
-		history.setType("deleteOffer");
-		historyRepo.save(history);
+		historyService.addHistory(sproduct,email,"deleteOffer");
 		return "redirect:/dashboard/show/"+type+"/"+sid;
 	}
 	
@@ -258,21 +216,7 @@ public class storeController {
 			sproduct = productRepo.getStoreProduct(pid, sid);
 			storeRepo.updateStoreProducts(sproducts.getPrice(), sproducts.getQuantity(), sproducts.getBrand().getId(),pid, sid);
 			String email = (String) request.getSession().getAttribute("email");
-			user user = userRepo.findByEmail(email);
-			history history = new history();
-			history.setDate(new Date());
-			history.setBrandId(sproduct.getBrand().getId());
-			history.setProductName(sproduct.getProduct().getName());
-			history.setPrice(sproduct.getPrice());
-			history.setProductId(sproduct.getProduct().getId());
-			history.setStoreId(sproduct.getStore().getId());
-			history.setQuantity(sproduct.getQuantity());
-			history.setOffer(sproduct.getOffer());
-			history.setUserViewed(sproduct.getUserViewed());
-			history.setLastBuyedDate(sproduct.getLastBuyedDate());
-			history.setUser(user);
-			history.setType("editProduct");
-			historyRepo.save(history);
+			historyService.addHistory(sproduct,email,"editProduct");
 			return "redirect:/dashboard/show/"+type+"/"+sid;
 		}else {
 			onlineProduct oproduct = productRepo.getOnlineProduct(pid);
@@ -287,20 +231,7 @@ public class storeController {
 			sproduct = productRepo.getStoreProduct(pid, sid);
 			storeRepo.updateStoreProducts(sproducts.getPrice(), sproducts.getQuantity(), sproducts.getBrand().getId(),pid, sid);
 			String email = (String) request.getSession().getAttribute("email");
-			user user = userRepo.findByEmail(email);
-			history history = new history();
-			history.setDate(new Date());
-			history.setBrandId(sproduct.getBrand().getId());
-			history.setProductName(sproduct.getProduct().getName());
-			history.setPrice(sproduct.getPrice());
-			history.setProductId(sproduct.getProduct().getId());
-			history.setStoreId(sproduct.getStore().getId());
-			history.setQuantity(sproduct.getQuantity());
-			history.setUserViewed(sproduct.getUserViewed());
-			history.setLastBuyedDate(sproduct.getLastBuyedDate());
-			history.setUser(user);
-			history.setType("editProduct");
-			historyRepo.save(history);
+			historyService.addHistory(sproduct,email,"editProduct");
 			return "redirect:/dashboard/show/"+type+"/"+sid;
 		}
 	}
@@ -339,19 +270,7 @@ public class storeController {
 				return "addProductToStore";
 			}
 			String email = (String) request.getSession().getAttribute("email");
-			user user = userRepo.findByEmail(email);
-			history history = new history();
-			history.setDate(new Date());
-			history.setBrandId(brand.getId());
-			history.setProductName(nproduct.getName());
-			history.setPrice(price);
-			history.setProductId(productId);
-			history.setStoreId(storeId);
-			history.setQuantity(quantity);
-			history.setUser(user);
-			history.setUserViewed(0);
-			history.setType("addProduct");
-			historyRepo.save(history);
+			historyService.addHistory(nproduct,nstore,email,"addProduct",brand,price,quantity);
 			return "redirect:/dashboard/show/"+type+"/"+storeId.toString();
 		}else {
 			onlineStore ostore = storeRepo.getOnlineStore(storeId);
@@ -365,19 +284,7 @@ public class storeController {
 				return "addProductToStore";
 			}
 			String email = (String) request.getSession().getAttribute("email");
-			user user = userRepo.findByEmail(email);
-			history history = new history();
-			history.setDate(new Date());
-			history.setBrandId(brand.getId());
-			history.setProductName(oproduct.getName());
-			history.setPrice(price);
-			history.setProductId(productId);
-			history.setStoreId(storeId);
-			history.setQuantity(quantity);
-			history.setUser(user);
-			history.setUserViewed(0);
-			history.setType("addProduct");
-			historyRepo.save(history);
+			historyService.addHistory(oproduct,ostore,email,"addProduct",brand,price,quantity);
 			return "redirect:/dashboard/show/"+type+"/"+storeId.toString();
 		}
 	}

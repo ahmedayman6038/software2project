@@ -29,22 +29,28 @@ public class userServiceTest {
     public void setUp() {
 		input1.setEmail("ahmed@gmail.com");
 		input1.setPassword("123");
+		
 		input2.setEmail("ahmed123@gmail.com");
 		input2.setPassword("123");
+		
 		input3.setEmail("ali@gmail.com");
 		input3.setPassword("123");
+		
 		input4.setName("ahmed123");
 		input4.setType("buyer");
 		input4.setEmail("ahmed123@gmail.com");
 		input4.setPassword("123456");
+		
 		input5.setName("ahmed456");
 		input5.setType("buyer");
 		input5.setEmail("ahmed@gmail.com");
 		input5.setPassword("123789");
+		
 		input6.setName("ali123");
 		input6.setType("storeOwner");
 		input6.setEmail("ali123@gmail.com");
 		input6.setPassword("123");
+		
 		user user = new user();
 		user.setName("ahmed");
 		user user2 = new user();

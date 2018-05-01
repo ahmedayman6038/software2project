@@ -22,9 +22,11 @@ public class productServiceTest {
 	product p1 = new normalProduct();
 	store s1 = new normalStore();
 	brand b1 = new brand();
+	
 	product p2 = new normalProduct();
 	store s2 = new normalStore();
 	brand b2 = new brand();
+	
 	product p3 = new onlineProduct();
 	store s3 = new onlineStore();
 	brand b3 = new brand();

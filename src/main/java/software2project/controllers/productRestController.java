@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import software2project.services.productService;
 
+/**
+ * This is a Product Controller Responsible for Handling Requests and Operations Related to Product Model 
+ * @author Rick & morty
+ *
+ */
 @RestController
 public class productRestController {
 	@Autowired

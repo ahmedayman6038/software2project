@@ -10,6 +10,11 @@ import software2project.Main;
 import software2project.models.*;
 import software2project.repository.*;
 
+/**
+ * This is a History Controller Responsible for Handling Requests and Operations Related to History Model 
+ * @author Rick & morty
+ *
+ */
 @Controller
 public class historyController {
 	@Autowired

@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import software2project.services.statisticService;
 
+/**
+ * This is a statistics Controller Responsible for Handling Requests and Operations Related to Statistic Model
+ * @author Rick & morty
+ *
+ */
 @RestController
 public class statisticsRestController {
 	@Autowired

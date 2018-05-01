@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import software2project.services.storeService;
 
+/**
+ * This is a Store Controller Responsible for Handling Requests and Operations Related to Store Model 
+ * @author Rick & morty
+ *
+ */
 @RestController
 public class storeRestController {
 	@Autowired
