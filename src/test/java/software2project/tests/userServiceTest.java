@@ -27,25 +27,31 @@ public class userServiceTest {
 	user input6 = new user();
 	@Before
     public void setUp() {
+		// valid login
 		input1.setEmail("ahmed@gmail.com");
 		input1.setPassword("123");
 		
+		// incorrect email
 		input2.setEmail("ahmed123@gmail.com");
 		input2.setPassword("123");
 		
+		// incorrect password
 		input3.setEmail("ali@gmail.com");
 		input3.setPassword("123");
 		
+		// valid buyer registration
 		input4.setName("ahmed123");
 		input4.setType("buyer");
 		input4.setEmail("ahmed123@gmail.com");
 		input4.setPassword("123456");
 		
+		// exist email
 		input5.setName("ahmed456");
 		input5.setType("buyer");
 		input5.setEmail("ahmed@gmail.com");
 		input5.setPassword("123789");
 		
+		// valid store owner registration
 		input6.setName("ali123");
 		input6.setType("storeOwner");
 		input6.setEmail("ali123@gmail.com");
